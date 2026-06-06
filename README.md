@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Echoes of the Past - Audio Memory Game
 
-## Getting Started
+A futuristic, sci-fi-themed web application for event-based puzzle competitions.
 
-First, run the development server:
+## Features
+- **Cyberpunk Terminal UI**: Immersive sci-fi experience with CRT effects and glowing aesthetics.
+- **Audio Identification**: Participants listen to nostalgic clips and decrypt memory fragments.
+- **Dynamic Hint System**: Unlocks hints based on failed attempts (Level 1 at 2 fails, Level 2 at 4 fails).
+- **Admin Dashboard**: Manage puzzles, track team progress, and configure game settings.
+- **Leaderboard**: Real-time rankings based on completion and speed.
+- **Completion Codes**: Securely generated codes for proof of mission success.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Tech Stack
+- **Frontend**: Next.js 14+, Tailwind CSS v4, Framer Motion.
+- **Backend**: Next.js API Routes, MongoDB (Mongoose).
+- **Audio**: Howler.js for precise control.
+
+## Setup Instructions
+
+### 1. Environment Variables
+Create a `.env.local` file in the root directory:
+```env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+ADMIN_PASSWORD=your_admin_panel_password
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Assets
+- Place background sound effects in `public/sounds/`:
+  - `beep.mp3`, `success.mp3`, `error.mp3`, `unlock.mp3`
+- Upload your puzzle audio files to the `public/uploads/` directory or use external URLs in the Admin Panel.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run Development Server
+```bash
+npm run dev
+```
 
-## Learn More
+## Admin Access
+- URL: `/admin/login`
+- Use the `ADMIN_PASSWORD` defined in your environment variables.
+- Features: Add/Edit/Delete puzzles, view active teams, and monitor stats.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Gameplay Flow
+1. **Join**: Teams enter their Name and a unique Access ID.
+2. **Solve**: Listen to the audio and type the identification.
+3. **Hints**: If stuck, hints appear after 2 and 4 failed attempts.
+4. **Win**: Complete all nodes to receive the Unique Completion Hash.
