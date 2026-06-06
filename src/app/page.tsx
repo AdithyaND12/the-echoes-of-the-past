@@ -2,105 +2,96 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function WelcomePage() {
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTime(`2007/11/14 ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`);
+    };
+    updateTime();
+    const int = setInterval(updateTime, 1000);
+    return () => clearInterval(int);
+  }, []);
+
   return (
-    <div className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center py-20 px-4">
-      
-      {/* Scattered Real Nostalgic Images */}
-      {/* Vintage Cassette */}
-      <motion.div 
-        animate={{ rotate: [-5, -2, -5], y: [0, 5, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-10 left-[5%] opacity-40 hidden lg:block w-64 h-48"
-      >
-        <img 
-          src="https://images.unsplash.com/photo-1544965850-6f8a66788f9b?q=80&w=800&auto=format&fit=crop" 
-          alt="Vintage Cassette"
-          className="w-full h-full object-contain drop-shadow-2xl grayscale-[0.2]"
-        />
-        <div className="text-[10px] font-bold mt-2 font-mono uppercase text-primary/40 text-center">Magnetic Archive #04</div>
-      </motion.div>
+    <div className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center font-mono">
+      {/* Dark Glassmorphism Overlay */}
+      <div className="absolute inset-0 bg-archive-black/50 backdrop-blur-[3px] z-0" />
 
-      {/* School Stationery / Sketch Pens */}
-      <motion.div 
-        animate={{ rotate: [10, 15, 10] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-40 right-[8%] opacity-30 hidden lg:block w-48 h-64"
-      >
-        <img 
-          src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=800&auto=format&fit=crop" 
-          alt="Stationery"
-          className="w-full h-full object-contain drop-shadow-xl"
-        />
-        <div className="text-[10px] font-bold mt-2 font-mono uppercase text-primary/40 text-right">Classroom Tools</div>
-      </motion.div>
+      {/* TV Static Overlay */}
+      <div className="pointer-events-none absolute inset-0 z-40 opacity-[0.06] mix-blend-screen bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
 
-      {/* Old TV (2000s era) */}
-      <div className="absolute bottom-10 right-[3%] opacity-20 hidden lg:block rotate-[-8deg] w-80 h-60">
-        <img 
-          src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop" 
-          alt="Vintage TV"
-          className="w-full h-full object-contain drop-shadow-2xl"
-        />
-        <div className="text-[10px] font-bold mt-2 font-mono uppercase text-primary/40 text-center">Standard Definition</div>
+      {/* HUD Elements */}
+      <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
+        <div className="w-3 h-3 rounded-full bg-archive-green animate-pulse shadow-[0_0_10px_#7CFF7C]" />
+        <span className="text-archive-green text-xs font-bold uppercase tracking-widest shadow-archive-green drop-shadow-[0_0_5px_rgba(124,255,124,0.5)]">Archive Status: Online</span>
       </div>
-
-      {/* Polaroid / Album */}
-      <div className="absolute bottom-20 left-[5%] opacity-40 hidden lg:block rotate-[12deg] w-56 h-72">
-        <div className="polaroid-frame p-3 pb-12 rotate-[-5deg]">
-          <img 
-            src="https://images.unsplash.com/photo-1526285849717-482456cd7436?q=80&w=800&auto=format&fit=crop" 
-            alt="Old Photo"
-            className="w-full h-48 object-cover sepia-[0.3]"
-          />
-          <div className="mt-4 font-serif italic text-xs text-primary/60 text-center">Summer Memories</div>
-        </div>
+      <div className="absolute bottom-6 right-6 md:top-6 md:bottom-auto md:right-6 z-20">
+        <span className="text-archive-white/80 text-sm md:text-lg uppercase font-mono tracking-widest drop-shadow-md">PLAY &#9654; {time}</span>
       </div>
 
       {/* Main Content */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2 }}
-        className="relative z-10 max-w-4xl w-full"
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-3xl p-8 md:p-16 rounded-[12px] bg-archive-black/60 backdrop-blur-md border border-archive-amber/20 shadow-[0_0_50px_rgba(17,17,17,0.8)] flex flex-col items-center"
       >
-        <div className="terminal-container p-8 md:p-20 paper-texture sketch-border relative bg-white/90 shadow-2xl">
-          {/* Real Washi Tape Texture Effect */}
-          <div className="absolute -top-4 left-1/4 w-32 h-10 bg-[url('https://www.transparenttextures.com/patterns/handmade-paper.png')] bg-accent/30 border-x-2 border-dashed border-black/10 rotate-2 mix-blend-multiply" />
+        <div className="flex flex-col items-center w-full">
+          {/* Title with flickering cursor */}
+          <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-archive-white mb-6 text-center drop-shadow-lg">
+            The Echoes <br /> 
+            <span className="text-archive-amber drop-shadow-[0_0_8px_rgba(200,155,99,0.4)]">Of The Past</span>
+            <motion.span 
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+              className="inline-block w-[0.4em] h-[0.9em] bg-archive-amber ml-3 align-baseline shadow-[0_0_10px_#C89B63]"
+            />
+          </h1>
+
+          <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-archive-amber/50 to-transparent mb-8" />
           
-          <div className="flex flex-col items-center">
-            <h1 className="text-5xl md:text-8xl font-bold font-serif uppercase tracking-tighter mb-6 text-center leading-none text-primary">
-              The Echoes <br /> 
-              <span className="text-accent underline decoration-primary/20">of the Past</span>
-            </h1>
-
-            <div className="w-32 h-0.5 bg-primary/10 mb-10" />
-            
-            <p className="text-xl md:text-3xl text-primary/80 mb-14 italic font-serif leading-relaxed max-w-2xl text-center px-4">
-              &quot;Reclaim lost memories by identifying the familiar sounds that defined a generation.&quot;
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center gap-10 w-full justify-center">
-              <Link href="/join" className="w-full sm:w-auto">
-                <button className="w-full px-20 py-6 bg-primary text-white hover:bg-white hover:text-primary border-2 border-primary transition-all duration-500 font-bold text-2xl uppercase tracking-[0.3em] shadow-[12px_12px_0px_rgba(67,52,34,0.15)] active:translate-x-1 active:translate-y-1 active:shadow-none cursor-pointer">
-                  Start Restoration
-                </button>
-              </Link>
-            </div>
-
-            <div className="mt-12">
-              <Link href="/leaderboard" className="text-primary/40 hover:text-primary transition-all text-[11px] font-mono uppercase tracking-[0.5em] font-black border-b border-primary/10 pb-1">
-                Hall of Echoes
-              </Link>
+          <p className="text-sm md:text-base text-archive-white/70 mb-12 font-mono leading-relaxed max-w-lg text-center tracking-wide">
+            Reclaim lost memories by identifying the familiar sounds that defined a generation.
+          </p>
+          
+          {/* Frosted Glass Inputs */}
+          <div className="w-full max-w-md flex flex-col gap-6 mb-12">
+            <div className="flex flex-col gap-2">
+              <label className="text-[10px] text-archive-amber uppercase tracking-[0.2em] ml-1">Subject Designation</label>
+              <input 
+                type="text" 
+                placeholder="Enter ID or Alias..." 
+                className="w-full bg-white/5 border border-white/10 rounded-[12px] px-5 py-4 text-archive-white placeholder:text-archive-white/30 focus:outline-none focus:border-archive-amber/60 focus:bg-white/10 focus:ring-1 focus:ring-archive-amber/30 transition-all duration-300 backdrop-blur-sm"
+              />
             </div>
           </div>
+
+          {/* Primary CTA */}
+          <div className="flex flex-col items-center w-full max-w-md">
+            <Link href="/join" className="w-full group">
+              <button className="relative w-full py-5 bg-archive-amber/10 border border-archive-amber text-archive-amber uppercase tracking-[0.3em] font-bold rounded-[12px] overflow-hidden transition-all duration-300 hover:text-archive-black hover:shadow-[0_0_30px_rgba(200,155,99,0.6)] active:scale-[0.98] active:bg-archive-amber/80">
+                <span className="relative z-10">Access Archives</span>
+                <div className="absolute inset-0 bg-archive-amber w-0 group-hover:w-full transition-all duration-500 ease-out z-0" />
+              </button>
+            </Link>
+
+            {/* Loading/Progress Animation */}
+            <div className="w-full h-1 bg-archive-black/80 mt-8 rounded-full overflow-hidden border border-white/5 relative">
+              <motion.div 
+                animate={{ x: ["-100%", "200%"] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-0 bottom-0 w-1/3 bg-archive-green/60 shadow-[0_0_10px_#7CFF7C] rounded-full"
+              />
+            </div>
+          </div>
+
         </div>
       </motion.div>
-
-      {/* Decorative Textures */}
-      <div className="fixed inset-0 pointer-events-none mix-blend-overlay opacity-30 bg-[url('https://www.transparenttextures.com/patterns/asie-textured.png')]" />
     </div>
   );
 }

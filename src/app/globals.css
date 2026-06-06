@@ -1,108 +1,46 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #FDF6E3; /* Cream Paper */
-  --color-primary: #433422;    /* Dark Ink */
-  --color-accent: #D4A373;     /* Warm Tan */
-  --color-success: #606C38;    /* Olive Green */
-  --color-error: #BC6C25;      /* Terracotta */
-  --color-terminal-bg: rgba(255, 255, 255, 0.9);
+  --color-archive-black: #111111;
+  --color-archive-amber: #C89B63;
+  --color-archive-green: #7CFF7C;
+  --color-archive-white: #F5F5F5;
   
-  --font-mono: 'Courier New', Courier, monospace;
+  --font-mono: var(--font-jetbrains-mono), 'Courier New', Courier, monospace;
 }
 
 :root {
-  --background: #FDF6E3;
-  --foreground: #433422;
+  --background: #111111;
+  --foreground: #F5F5F5;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-mono);
   overflow-x: hidden;
-  /* Scrapbook Background */
-  background-image: 
-    linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px),
-    url("https://www.transparenttextures.com/patterns/cardboard-flat.png");
-  background-size: 40px 40px, 40px 40px, auto;
+  /* Original WhatsApp Nostalgic Background Image */
+  background-image: url("/nostalgic-bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
-/* Washi Tape Effect */
-.washi-tape {
-  background: rgba(212, 163, 115, 0.4);
-  backdrop-filter: blur(1px);
-  border-left: 2px dashed rgba(0,0,0,0.1);
-  border-right: 2px dashed rgba(0,0,0,0.1);
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-}
-
-/* Post-it Note */
-.post-it {
-  background: #FEFAE0;
-  padding: 15px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-  transform: rotate(2deg);
-  border-bottom-right-radius: 20px 5px;
-}
-
-/* Vintage TV Frame */
-.tv-frame {
-  background: #2b2b2b;
-  border: 15px solid #3d3d3d;
-  border-radius: 40px;
-  padding: 20px;
-  box-shadow: 
-    inset 0 0 20px rgba(0,0,0,0.8),
-    0 10px 30px rgba(0,0,0,0.3);
-  position: relative;
-}
-
-.tv-frame::after {
+.crt-overlay::after {
   content: "";
-  position: absolute;
-  top: 10px;
-  right: 40px;
-  width: 10px;
-  height: 10px;
-  background: #ff4b2b;
-  border-radius: 50%;
-  box-shadow: 0 0 5px #ff4b2b;
-  animation: blink 2s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0.3; }
-}
-
-/* Polaroid Container */
-.polaroid-frame {
-  background: white;
-  padding: 10px 10px 40px 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-  border: 1px solid #eee;
-  display: inline-block;
-}
-
-/* Hand-drawn look border */
-.sketch-border {
-  border: 2px solid var(--color-primary);
-  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-}
-
-.crt-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background: 
-    radial-gradient(circle, transparent 50%, rgba(0,0,0,0.1) 100%),
-    url("https://www.transparenttextures.com/patterns/pinstriped-suit.png");
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
   pointer-events: none;
   z-index: 100;
-  opacity: 0.4;
+  opacity: 0.8;
 }
 
 /* Custom Scrollbar */
@@ -111,11 +49,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #FDF6E3;
+  background: #111111;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D4A373;
-  border: 3px solid #FDF6E3;
+  background: #C89B63;
+  border: 3px solid #111111;
   border-radius: 10px;
 }
