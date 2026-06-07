@@ -97,7 +97,7 @@ export default function WordleGuesser({ onSuccess, collectedLetters }: WordleGue
           {guess.map((char, i) => (
             <input
               key={i}
-              ref={(el) => (inputs.current[i] = el)}
+              ref={(el) => { inputs.current[i] = el; }}
               type="text"
               maxLength={1}
               value={char}
