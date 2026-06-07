@@ -38,10 +38,15 @@ export async function GET(req: Request) {
 
     const currentPuzzle = puzzles[team.currentPuzzleIndex];
 
+    // Get all reward letters from all puzzles and jumble them
+    const allLetters = puzzles.map(p => p.rewardLetter).filter(l => l && l !== '?');
+    const jumbledLetters = [...allLetters].sort(() => Math.random() - 0.5);
+
     if (!currentPuzzle) {
       return NextResponse.json({ 
         isCompleted: true, 
-        message: 'Simulation Calibration Complete' 
+        message: 'Simulation Calibration Complete',
+        jumbledLetters
       });
     }
 
@@ -54,7 +59,8 @@ export async function GET(req: Request) {
         totalNodes: puzzles.length,
         attempts: team.attempts,
       },
-      collectedLetters: team.collectedLetters
+      collectedLetters: team.collectedLetters,
+      jumbledLetters
     });
   } catch (err: any) {
     console.error('Puzzle fetch error:', err.message);

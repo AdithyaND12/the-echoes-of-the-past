@@ -7,9 +7,10 @@ import { ShieldCheck, ShieldAlert, Key } from 'lucide-react';
 interface WordleGuesserProps {
   onSuccess: () => void;
   collectedLetters: string[];
+  jumbledLetters: string[];
 }
 
-export default function WordleGuesser({ onSuccess, collectedLetters }: WordleGuesserProps) {
+export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLetters }: WordleGuesserProps) {
   const [guess, setGuess] = useState(['', '', '', '', '', '']);
   const [status, setStatus] = useState<{ type: 'none' | 'success' | 'error', message: string }>({ type: 'none', message: '' });
   const [loading, setLoading] = useState(false);
@@ -75,21 +76,27 @@ export default function WordleGuesser({ onSuccess, collectedLetters }: WordleGue
       </div>
 
       <div className="mb-8">
-        <div className="text-[10px] text-archive-white/40 uppercase tracking-widest mb-3">Retrieved Fragments:</div>
-        <div className="flex gap-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div 
-              key={i} 
-              className={`w-8 h-10 border flex items-center justify-center font-mono font-bold rounded ${
-                collectedLetters[i] 
-                  ? 'border-archive-green/50 bg-archive-green/5 text-archive-green shadow-[0_0_10px_rgba(124,255,124,0.2)]' 
-                  : 'border-white/5 bg-white/5 text-white/10'
-              }`}
-            >
-              {collectedLetters[i] || '?'}
-            </div>
-          ))}
+        <div className="text-[10px] text-archive-white/40 uppercase tracking-widest mb-3">Available Fragments (Jumbled Pool):</div>
+        <div className="flex flex-wrap gap-3">
+          {jumbledLetters.map((l, i) => {
+            const isCollected = collectedLetters.includes(l);
+            return (
+              <div 
+                key={i} 
+                className={`w-10 h-12 border-2 flex items-center justify-center font-mono font-bold rounded-lg text-lg transition-all duration-500 ${
+                  isCollected 
+                    ? 'border-archive-green bg-archive-green/10 text-archive-green shadow-[0_0_15px_rgba(124,255,124,0.3)] scale-110' 
+                    : 'border-white/10 bg-white/5 text-white/10'
+                }`}
+              >
+                {l}
+              </div>
+            );
+          })}
         </div>
+        <p className="mt-4 text-[10px] text-archive-amber/50 italic font-mono">
+          &gt; Collect all letters by identifying songs, then unscramble them to solve the override.
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">

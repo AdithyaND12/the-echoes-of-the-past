@@ -16,6 +16,7 @@ export default function PlayPage() {
   const [status, setStatus] = useState<{ type: 'success' | 'error' | 'none', message: string }>({ type: 'none', message: '' });
   const [hints, setHints] = useState<{ h1: string | null, h2: string | null }>({ h1: null, h2: null });
   const [collectedLetters, setCollectedLetters] = useState<string[]>([]);
+  const [jumbledLetters, setJumbledLetters] = useState<string[]>([]);
   const [showWordle, setShowWordle] = useState(false);
   const router = useRouter();
 
@@ -41,6 +42,7 @@ export default function PlayPage() {
           setPuzzle(data.puzzle);
           setHints({ h1: data.puzzle.hint1, h2: data.puzzle.hint2 });
           setCollectedLetters(data.collectedLetters || []);
+          setJumbledLetters(data.jumbledLetters || []);
         }
       } else {
         localStorage.removeItem('teamToken');
@@ -191,11 +193,14 @@ export default function PlayPage() {
                         {l}
                       </span>
                     ))}
-                    {Array.from({ length: 6 - collectedLetters.length }).map((_, i) => (
+                    {Array.from({ length: Math.max(0, (jumbledLetters.length || 6) - collectedLetters.length) }).map((_, i) => (
                       <span key={i} className="w-5 h-5 flex items-center justify-center bg-white/5 border border-white/10 text-white/20 text-[10px] rounded font-bold font-mono">
                         ?
                       </span>
                     ))}
+                  </div>
+                  <div className="mt-2 text-[8px] text-archive-amber/30 uppercase tracking-widest font-mono">
+                    Pool: {jumbledLetters.join(' ')}
                   </div>
                 </div>
               </div>
@@ -254,6 +259,7 @@ export default function PlayPage() {
           ) : (
             <WordleGuesser 
               collectedLetters={collectedLetters} 
+              jumbledLetters={jumbledLetters}
               onSuccess={() => router.push('/success')} 
             />
           )}
