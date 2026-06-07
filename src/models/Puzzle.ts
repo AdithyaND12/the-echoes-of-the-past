@@ -11,7 +11,7 @@ export interface IPuzzle extends Document {
 }
 
 const PuzzleSchema: Schema = new Schema({
-  audioUrl: { type: String, required: true },
+  audioUrl: { type: String, default: '' },
   correctAnswer: { type: String, required: true },
   acceptedAnswers: { type: [String], required: true },
   hint1: { type: String, required: true },

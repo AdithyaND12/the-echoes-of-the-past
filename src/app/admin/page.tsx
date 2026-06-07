@@ -65,7 +65,6 @@ export default function AdminDashboard() {
       acceptedAnswers: (formData.get('acceptedAnswers') as string).split(',').map(s => s.trim()),
       hint1: formData.get('hint1'),
       hint2: formData.get('hint2'),
-      audioUrl: formData.get('audioUrl'),
       rewardLetter: formData.get('rewardLetter'),
     };
 
@@ -208,7 +207,6 @@ export default function AdminDashboard() {
                   <div>
                     <div className="text-xs text-primary/40 mb-1">NODE 0{idx + 1}</div>
                     <div className="font-bold text-primary">{p.correctAnswer}</div>
-                    <div className="text-[10px] text-primary/30 truncate max-w-xs">{p.audioUrl}</div>
                   </div>
                   <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onClick={() => setEditingPuzzle(p)} className="p-2 text-primary hover:bg-primary/20 rounded"><Edit2 size={16} /></button>
@@ -234,10 +232,6 @@ export default function AdminDashboard() {
                       <label className="text-[10px] uppercase text-primary/60 block mb-1">Reward Letter (1 char)</label>
                       <input name="rewardLetter" defaultValue={editingPuzzle?.rewardLetter} maxLength={1} required className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none text-center font-bold" />
                     </div>
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase text-primary/60 block mb-1">Audio URL / Public Path</label>
-                    <input name="audioUrl" defaultValue={editingPuzzle?.audioUrl} required className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none" />
                   </div>
                   <div>
                     <label className="text-[10px] uppercase text-primary/60 block mb-1">Intel Level 1</label>
