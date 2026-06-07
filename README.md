@@ -5,6 +5,7 @@ A futuristic, sci-fi-themed web application for event-based puzzle competitions.
 ## Features
 - **Cyberpunk Terminal UI**: Immersive sci-fi experience with CRT effects and glowing aesthetics.
 - **Audio Identification**: Participants listen to nostalgic clips and decrypt memory fragments.
+- **Live Event Mode (Admin DJ)**: Admin controls a single merged MP3 file from their dashboard. Participants focus on identification without individual player controls.
 - **Wordle Integration (Master Override)**: Correct song guesses reward players with scrambled letters. Solve the final 6-letter secret word at any time to override the system and win early.
 - **Dynamic Hint System**: Unlocks hints based on failed attempts (Level 1 at 2 fails, Level 2 at 4 fails).
 - **Admin Dashboard**: Manage puzzles, set reward letters, configure the final secret word, and track team progress.

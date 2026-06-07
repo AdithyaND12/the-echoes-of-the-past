@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Terminal from '@/components/Terminal';
-import AudioPlayer from '@/components/AudioPlayer';
 import WordleGuesser from '@/components/WordleGuesser';
 import { CheckCircle, XCircle, Key, Headphones } from 'lucide-react';
 
@@ -203,8 +202,6 @@ export default function PlayPage() {
 
               {/* Core Interaction */}
               <div className="space-y-12">
-                <AudioPlayer src={puzzle.audioUrl} />
-
                 <form onSubmit={handleSubmit} className="space-y-10">
                   <div className="relative">
                     <label className="block text-[11px] uppercase tracking-[0.4em] font-bold mb-5 text-archive-amber/70">

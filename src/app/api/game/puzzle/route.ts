@@ -45,10 +45,9 @@ export async function GET(req: Request) {
       });
     }
 
-    // Return puzzle data WITHOUT the correct answers
+    // Return puzzle data WITHOUT the correct answers or the audio URL
     return NextResponse.json({
       puzzle: {
-        audioUrl: currentPuzzle.audioUrl,
         hint1: team.attempts >= 2 ? currentPuzzle.hint1 : null,
         hint2: team.attempts >= 4 ? currentPuzzle.hint2 : null,
         nodeIndex: team.currentPuzzleIndex + 1,

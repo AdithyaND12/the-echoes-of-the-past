@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Terminal from '@/components/Terminal';
+import AudioPlayer from '@/components/AudioPlayer';
 import { motion } from 'framer-motion';
-import { Plus, Trash2, Edit2, BarChart2, Settings as SettingsIcon, Music, Users } from 'lucide-react';
+import { Plus, Trash2, Edit2, BarChart2, Settings as SettingsIcon, Music, Users, Radio } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'puzzles' | 'analytics' | 'settings'>('puzzles');
@@ -92,6 +93,7 @@ export default function AdminDashboard() {
     const data = {
       targetWord: formData.get('targetWord'),
       attemptsPerPuzzle: Number(formData.get('attemptsPerPuzzle')),
+      masterAudioUrl: formData.get('masterAudioUrl'),
     };
 
     const token = localStorage.getItem('adminToken');
@@ -137,6 +139,16 @@ export default function AdminDashboard() {
             [ DISCONNECT ]
           </button>
         </div>
+
+        {/* Master Audio Control (DJ Mode) */}
+        {settings?.masterAudioUrl && (
+          <div className="mb-10 bg-primary/5 border border-primary/20 rounded-lg p-6">
+            <div className="flex items-center gap-2 mb-4 text-primary uppercase tracking-widest text-xs font-bold">
+              <Radio size={16} className="animate-pulse" /> Live Event Audio Control
+            </div>
+            <AudioPlayer src={settings.masterAudioUrl} />
+          </div>
+        )}
 
         <div className="flex gap-4 mb-8">
           {[
@@ -280,6 +292,10 @@ export default function AdminDashboard() {
                 <div>
                   <label className="text-[10px] uppercase text-primary/60 block mb-1">Final Word (Target)</label>
                   <input name="targetWord" defaultValue={settings?.targetWord} required maxLength={6} className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none uppercase font-mono tracking-widest" />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase text-primary/60 block mb-1">Master Audio URL (Merged MP3)</label>
+                  <input name="masterAudioUrl" defaultValue={settings?.masterAudioUrl} required className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none font-mono" />
                 </div>
                 <div>
                   <label className="text-[10px] uppercase text-primary/60 block mb-1">Attempts Per Puzzle</label>
