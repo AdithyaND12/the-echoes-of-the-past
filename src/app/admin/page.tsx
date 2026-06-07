@@ -141,12 +141,31 @@ export default function AdminDashboard() {
         </div>
 
         {/* Master Audio Control (DJ Mode) */}
-        {settings?.masterAudioUrl && (
-          <div className="mb-10 bg-primary/5 border border-primary/20 rounded-lg p-6">
-            <div className="flex items-center gap-2 mb-4 text-primary uppercase tracking-widest text-xs font-bold">
-              <Radio size={16} className="animate-pulse" /> Live Event Audio Control
+        {settings && (
+          <div className="mb-10 bg-archive-black/40 border border-archive-amber/30 rounded-lg p-6 backdrop-blur-md shadow-[0_0_30px_rgba(200,155,99,0.1)]">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2 text-archive-amber uppercase tracking-widest text-xs font-black">
+                <Radio size={16} className={settings.masterAudioUrl ? "animate-pulse" : "opacity-30"} /> 
+                Live Event Audio Control
+              </div>
+              {!settings.masterAudioUrl && (
+                <span className="text-[10px] text-archive-amber/40 italic font-mono uppercase">
+                  &lt; No Audio Source Configured &gt;
+                </span>
+              )}
             </div>
-            <AudioPlayer src={settings.masterAudioUrl} />
+            {settings.masterAudioUrl ? (
+              <AudioPlayer src={settings.masterAudioUrl} />
+            ) : (
+              <div className="py-4 border border-dashed border-archive-amber/10 rounded flex items-center justify-center">
+                <button 
+                  onClick={() => setActiveTab('settings')}
+                  className="text-[10px] text-archive-amber/60 hover:text-archive-amber transition-all uppercase tracking-widest font-bold underline underline-offset-4"
+                >
+                  Configure Master Audio in Settings
+                </button>
+              </div>
+            )}
           </div>
         )}
 
@@ -287,7 +306,7 @@ export default function AdminDashboard() {
 
         {activeTab === 'settings' && (
           <div className="max-w-md">
-            <Terminal title="SYSTEM_CONFIG">
+            <Terminal title="SYSTEM_CONFIG" key={settings?._id || 'settings'}>
               <form onSubmit={handleSaveSettings} className="space-y-6">
                 <div>
                   <label className="text-[10px] uppercase text-primary/60 block mb-1">Final Word (Target)</label>

@@ -17,7 +17,11 @@ export async function GET(req: Request) {
   await dbConnect();
   let settings = await Settings.findOne();
   if (!settings) {
-    settings = await Settings.create({ adminPasswordHash: 'temp' }); // Should already exist from setup usually
+    settings = await Settings.create({ 
+      adminPasswordHash: 'temp',
+      targetWord: 'MEMORY',
+      masterAudioUrl: ''
+    });
   }
   return NextResponse.json(settings);
 }
