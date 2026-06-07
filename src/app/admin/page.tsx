@@ -66,6 +66,7 @@ export default function AdminDashboard() {
       hint1: formData.get('hint1'),
       hint2: formData.get('hint2'),
       rewardLetter: formData.get('rewardLetter'),
+      audioUrl: '', // Explicitly set to blank for Live Event Mode
     };
 
     if (editingPuzzle?._id) data._id = editingPuzzle._id;
