@@ -38,6 +38,11 @@ export default function PlayPage() {
           router.push('/success');
         } else if (data.noPuzzles) {
           setNoPuzzles(true);
+        } else if (data.message === 'Simulation Calibration Complete') {
+          // All songs finished, but wordle not solved yet
+          setPuzzle({ allSongsDone: true, attempts: 0 });
+          setCollectedLetters(data.collectedLetters || []);
+          setJumbledLetters(data.jumbledLetters || []);
         } else {
           setPuzzle(data.puzzle);
           setHints({ h1: data.puzzle.hint1, h2: data.puzzle.hint2 });
@@ -177,84 +182,108 @@ export default function PlayPage() {
         >
           {!showWordle ? (
             <div className="bg-archive-black/50 backdrop-blur-md rounded-[12px] p-6 md:p-12 border border-archive-amber/20 shadow-[0_0_50px_rgba(17,17,17,0.8)]">
-              {/* HUD */}
-              <div className="flex justify-between items-center mb-10 border-b border-archive-amber/10 pb-6">
-                <div>
-                  <h3 className="text-archive-amber/50 text-[10px] uppercase tracking-[0.4em] font-bold">Tape Identification</h3>
-                  <div className="text-2xl font-bold font-mono text-archive-white/90">
-                    RE_SESSION_0{puzzle.nodeIndex}
+              {puzzle.allSongsDone ? (
+                <div className="text-center py-10 space-y-8">
+                  <div className="flex justify-center">
+                    <div className="p-4 rounded-full bg-archive-green/10 border border-archive-green/40 shadow-[0_0_20px_rgba(124,255,124,0.2)]">
+                      <CheckCircle className="text-archive-green" size={48} />
+                    </div>
                   </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-archive-white uppercase tracking-widest mb-2">All Segments Restored</h2>
+                    <p className="text-archive-white/50 font-mono text-xs uppercase tracking-[0.2em]">
+                      The audio database is complete. Master override sequence is now required.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => setShowWordle(true)}
+                    className="px-10 py-4 bg-archive-amber text-archive-black font-black uppercase tracking-[0.3em] text-xs rounded-[12px] hover:shadow-[0_0_30px_rgba(200,155,99,0.5)] transition-all"
+                  >
+                    Go to Master Override
+                  </button>
                 </div>
-                <div className="text-right">
-                  <div className="text-archive-amber/50 text-[10px] uppercase tracking-[0.4em] font-bold">Fragments Retrieved</div>
-                  <div className="flex gap-1 justify-end mt-1">
-                    {collectedLetters.map((l, i) => (
-                      <span key={i} className="w-5 h-5 flex items-center justify-center bg-archive-green/20 border border-archive-green/40 text-archive-green text-[10px] rounded font-bold font-mono">
-                        {l}
-                      </span>
-                    ))}
-                    {Array.from({ length: Math.max(0, (jumbledLetters.length || 6) - collectedLetters.length) }).map((_, i) => (
-                      <span key={i} className="w-5 h-5 flex items-center justify-center bg-white/5 border border-white/10 text-white/20 text-[10px] rounded font-bold font-mono">
-                        ?
-                      </span>
-                    ))}
-                  </div>
-                  <div className="mt-2 text-[8px] text-archive-amber/30 uppercase tracking-widest font-mono">
-                    Pool: {jumbledLetters.join(' ')}
-                  </div>
-                </div>
-              </div>
-
-              {/* Core Interaction */}
-              <div className="space-y-12">
-                <form onSubmit={handleSubmit} className="space-y-10">
-                  <div className="relative">
-                    <label className="block text-[11px] uppercase tracking-[0.4em] font-bold mb-5 text-archive-amber/70">
-                      Archive Data Restoration Input
-                    </label>
-                    <input
-                      type="text"
-                      autoFocus
-                      value={answer}
-                      onChange={(e) => setAnswer(e.target.value)}
-                      disabled={submitting || status.type === 'success'}
-                      className="w-full bg-white/5 border border-white/10 rounded-[12px] p-4 text-2xl text-archive-white focus:outline-none focus:border-archive-amber/60 focus:bg-white/10 focus:ring-1 focus:ring-archive-amber/30 transition-all font-mono placeholder:text-archive-white/20 backdrop-blur-sm"
-                      placeholder="ENTER RESPONSE..."
-                    />
-                    
-                    <AnimatePresence>
-                      {status.type !== 'none' && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0 }}
-                          className={`mt-8 p-5 rounded-[8px] flex items-center gap-5 font-mono text-sm uppercase tracking-widest ${
-                            status.type === 'success' 
-                              ? 'border border-archive-green/50 text-archive-green bg-archive-green/10 shadow-[0_0_20px_rgba(124,255,124,0.1)]' 
-                              : 'border border-red-500/50 text-red-400 bg-red-900/20 shadow-[0_0_20px_rgba(255,0,0,0.1)]'
-                          }`}
-                        >
-                          {status.type === 'success' ? <CheckCircle size={20} /> : <XCircle size={20} />}
-                          <span className="font-bold italic">
-                            {status.message}
+              ) : (
+                <>
+                  {/* HUD */}
+                  <div className="flex justify-between items-center mb-10 border-b border-archive-amber/10 pb-6">
+                    <div>
+                      <h3 className="text-archive-amber/50 text-[10px] uppercase tracking-[0.4em] font-bold">Tape Identification</h3>
+                      <div className="text-2xl font-bold font-mono text-archive-white/90">
+                        RE_SESSION_0{puzzle.nodeIndex}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-archive-amber/50 text-[10px] uppercase tracking-[0.4em] font-bold">Fragments Retrieved</div>
+                      <div className="flex gap-1 justify-end mt-1">
+                        {collectedLetters.map((l, i) => (
+                          <span key={i} className="w-5 h-5 flex items-center justify-center bg-archive-green/20 border border-archive-green/40 text-archive-green text-[10px] rounded font-bold font-mono">
+                            {l}
                           </span>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                        ))}
+                        {Array.from({ length: Math.max(0, (jumbledLetters.length || 6) - collectedLetters.length) }).map((_, i) => (
+                          <span key={i} className="w-5 h-5 flex items-center justify-center bg-white/5 border border-white/10 text-white/20 text-[10px] rounded font-bold font-mono">
+                            ?
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mt-2 text-[8px] text-archive-amber/30 uppercase tracking-widest font-mono">
+                        Pool: {jumbledLetters.join(' ')}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="group pt-4">
-                    <button
-                      type="submit"
-                      disabled={submitting || !answer.trim() || status.type === 'success'}
-                      className="relative w-full py-5 bg-archive-amber/10 border border-archive-amber text-archive-amber uppercase tracking-[0.3em] font-bold rounded-[12px] overflow-hidden transition-all duration-300 hover:text-archive-black hover:shadow-[0_0_30px_rgba(200,155,99,0.6)] active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 disabled:hover:shadow-none"
-                    >
-                      <span className="relative z-10">{submitting ? "Processing Data..." : "Restore Segment"}</span>
-                      {(!submitting && answer.trim() && status.type !== 'success') && <div className="absolute inset-0 bg-archive-amber w-0 group-hover:w-full transition-all duration-500 ease-out z-0" />}
-                    </button>
+                  {/* Core Interaction */}
+                  <div className="space-y-12">
+                    <form onSubmit={handleSubmit} className="space-y-10">
+                      <div className="relative">
+                        <label className="block text-[11px] uppercase tracking-[0.4em] font-bold mb-5 text-archive-amber/70">
+                          Archive Data Restoration Input
+                        </label>
+                        <input
+                          type="text"
+                          autoFocus
+                          value={answer}
+                          onChange={(e) => setAnswer(e.target.value)}
+                          disabled={submitting || status.type === 'success'}
+                          className="w-full bg-white/5 border border-white/10 rounded-[12px] p-4 text-2xl text-archive-white focus:outline-none focus:border-archive-amber/60 focus:bg-white/10 focus:ring-1 focus:ring-archive-amber/30 transition-all font-mono placeholder:text-archive-white/20 backdrop-blur-sm"
+                          placeholder="ENTER RESPONSE..."
+                        />
+                        
+                        <AnimatePresence>
+                          {status.type !== 'none' && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0 }}
+                              className={`mt-8 p-5 rounded-[8px] flex items-center gap-5 font-mono text-sm uppercase tracking-widest ${
+                                status.type === 'success' 
+                                  ? 'border border-archive-green/50 text-archive-green bg-archive-green/10 shadow-[0_0_20px_rgba(124,255,124,0.1)]' 
+                                  : 'border border-red-500/50 text-red-400 bg-red-900/20 shadow-[0_0_20px_rgba(255,0,0,0.1)]'
+                              }`}
+                            >
+                              {status.type === 'success' ? <CheckCircle size={20} /> : <XCircle size={20} />}
+                              <span className="font-bold italic">
+                                {status.message}
+                              </span>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+
+                      <div className="group pt-4">
+                        <button
+                          type="submit"
+                          disabled={submitting || !answer.trim() || status.type === 'success'}
+                          className="relative w-full py-5 bg-archive-amber/10 border border-archive-amber text-archive-amber uppercase tracking-[0.3em] font-bold rounded-[12px] overflow-hidden transition-all duration-300 hover:text-archive-black hover:shadow-[0_0_30px_rgba(200,155,99,0.6)] active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 disabled:hover:shadow-none"
+                        >
+                          <span className="relative z-10">{submitting ? "Processing Data..." : "Restore Segment"}</span>
+                          {(!submitting && answer.trim() && status.type !== 'success') && <div className="absolute inset-0 bg-archive-amber w-0 group-hover:w-full transition-all duration-500 ease-out z-0" />}
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                </form>
-              </div>
+                </>
+              )}
             </div>
           ) : (
             <WordleGuesser 

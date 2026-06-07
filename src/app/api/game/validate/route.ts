@@ -54,18 +54,13 @@ export async function POST(req: Request) {
       team.currentPuzzleIndex += 1;
       team.attempts = 0; // Reset attempts for next puzzle
       
-      if (team.currentPuzzleIndex >= puzzles.length) {
-        team.isCompleted = true;
-        team.endTime = new Date();
-      }
-      
       await team.save();
 
       return NextResponse.json({ 
         correct: true, 
         letter,
         nextPuzzle: team.currentPuzzleIndex < puzzles.length,
-        isCompleted: team.isCompleted
+        isCompleted: false // Never auto-complete from songs now
       });
     } else {
       // Increment attempts
