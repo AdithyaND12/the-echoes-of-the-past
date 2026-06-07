@@ -54,7 +54,8 @@ export async function GET(req: Request) {
         nodeIndex: team.currentPuzzleIndex + 1,
         totalNodes: puzzles.length,
         attempts: team.attempts,
-      }
+      },
+      collectedLetters: team.collectedLetters
     });
   } catch (err: any) {
     console.error('Puzzle fetch error:', err.message);

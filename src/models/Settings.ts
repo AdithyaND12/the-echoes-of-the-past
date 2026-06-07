@@ -6,6 +6,7 @@ export interface ISettings extends Document {
   completionCodePrefix: string;
   adminPasswordHash: string;
   themeColor: string;
+  targetWord: string;
 }
 
 const SettingsSchema: Schema = new Schema({
@@ -14,6 +15,7 @@ const SettingsSchema: Schema = new Schema({
   completionCodePrefix: { type: String, default: 'MEMORY' },
   adminPasswordHash: { type: String, required: true },
   themeColor: { type: String, default: '#00E5FF' },
+  targetWord: { type: String, default: 'MEMORY' },
 });
 
 export default mongoose.models.Settings || mongoose.model<ISettings>('Settings', SettingsSchema);

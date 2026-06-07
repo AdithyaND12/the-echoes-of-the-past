@@ -9,6 +9,8 @@ export interface ITeam extends Document {
   endTime?: Date;
   score: number;
   isCompleted: boolean;
+  collectedLetters: string[];
+  finalWordSolved: boolean;
 }
 
 const TeamSchema: Schema = new Schema({
@@ -20,6 +22,8 @@ const TeamSchema: Schema = new Schema({
   endTime: { type: Date },
   score: { type: Number, default: 0 },
   isCompleted: { type: Boolean, default: false },
+  collectedLetters: { type: [String], default: [] },
+  finalWordSolved: { type: Boolean, default: false },
 }, { timestamps: true });
 
 export default mongoose.models.Team || mongoose.model<ITeam>('Team', TeamSchema);

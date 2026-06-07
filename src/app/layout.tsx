@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import ParticleBackground from "@/components/ParticleBackground";
+import GlobalOverlays from "@/components/GlobalOverlays";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -20,7 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} antialiased crt-overlay`}>
+      <body className={`${jetbrainsMono.variable} antialiased crt-overlay font-mono overflow-x-hidden`}>
+        <GlobalOverlays />
         <ParticleBackground />
         <main className="relative z-10 min-h-screen">
           {children}

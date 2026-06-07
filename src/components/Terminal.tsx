@@ -1,40 +1,29 @@
 'use client';
 
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import React from 'react';
 
 interface TerminalProps {
-  children: ReactNode;
+  title: string;
+  children: React.ReactNode;
   className?: string;
-  title?: string;
 }
 
-export default function Terminal({ children, className, title }: TerminalProps) {
+export default function Terminal({ title, children, className = '' }: TerminalProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className={cn("terminal-container glow-border w-full max-w-2xl mx-auto", className)}
-    >
-      {title && (
-        <div className="border-b border-primary/30 p-2 bg-primary/10 flex items-center justify-between">
-          <span className="text-xs font-mono uppercase tracking-widest text-primary/70">{title}</span>
-          <div className="flex gap-1">
-            <div className="w-2 h-2 rounded-full bg-primary/30" />
-            <div className="w-2 h-2 rounded-full bg-primary/30" />
-            <div className="w-2 h-2 rounded-full bg-primary/30" />
-          </div>
+    <div className={`bg-archive-black border border-archive-amber/30 rounded-[8px] shadow-[0_0_20px_rgba(200,155,99,0.1)] ${className}`}>
+      <div className="bg-archive-amber/5 px-4 py-2 border-b border-archive-amber/20 flex items-center justify-between">
+        <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-archive-amber/70 font-mono">
+          {title}
+        </span>
+        <div className="flex gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-archive-amber/30" />
+          <div className="w-2 h-2 rounded-full bg-archive-amber/30" />
+          <div className="w-2 h-2 rounded-full bg-archive-amber/30" />
         </div>
-      )}
-      <div className="p-6 md:p-8">
+      </div>
+      <div className="p-6">
         {children}
       </div>
-    </motion.div>
+    </div>
   );
 }

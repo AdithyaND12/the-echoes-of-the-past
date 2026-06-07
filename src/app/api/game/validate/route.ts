@@ -44,6 +44,12 @@ export async function POST(req: Request) {
     );
 
     if (isCorrect) {
+      // Reward with letter
+      const letter = currentPuzzle.rewardLetter;
+      if (letter && !team.collectedLetters.includes(letter)) {
+        team.collectedLetters.push(letter);
+      }
+
       // Advance to next puzzle
       team.currentPuzzleIndex += 1;
       team.attempts = 0; // Reset attempts for next puzzle
@@ -57,6 +63,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json({ 
         correct: true, 
+        letter,
         nextPuzzle: team.currentPuzzleIndex < puzzles.length,
         isCompleted: team.isCompleted
       });

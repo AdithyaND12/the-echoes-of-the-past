@@ -42,42 +42,40 @@ export default function JoinPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4">
-      {/* Decorative Icons */}
-      <div className="absolute top-1/2 left-20 -translate-y-1/2 opacity-5 hidden lg:block">
-        <Fingerprint size={400} />
-      </div>
-
-      <Terminal title="SQUAD_REGISTRATION" className="max-w-md paper-texture">
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-4">
+      {/* Main Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-lg p-8 md:p-12 rounded-[12px] bg-archive-black/50 backdrop-blur-md border border-archive-amber/20 shadow-[0_0_50px_rgba(17,17,17,0.8)] flex flex-col"
+      >
         <div className="flex flex-col items-center mb-8">
-          <div className="p-4 rounded-full bg-primary/5 mb-4 border border-primary/20">
-            <UserPlus size={32} className="text-primary" />
-          </div>
-          <h2 className="text-2xl font-bold glow-text tracking-widest text-center uppercase font-serif">Initialize Squad</h2>
-          <div className="h-0.5 w-16 bg-primary/20 mt-2" />
+          <h2 className="text-3xl font-bold tracking-widest text-center uppercase text-archive-white drop-shadow-md">Initialize Squad</h2>
+          <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-archive-amber/50 to-transparent mt-4" />
         </div>
         
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="relative">
-            <label className="block text-[10px] uppercase tracking-[0.2em] font-bold mb-2 text-primary/60">Squad Designation</label>
+        <form onSubmit={handleSubmit} className="space-y-6 flex flex-col w-full">
+          <div className="relative flex flex-col gap-2">
+            <label className="text-[10px] text-archive-amber uppercase tracking-[0.2em] ml-1">Squad Designation</label>
             <input
               type="text"
               required
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
-              className="w-full bg-white/40 border-2 border-primary/10 p-4 text-primary focus:outline-none focus:border-primary transition-all font-mono shadow-inner"
+              className="w-full bg-white/5 border border-white/10 rounded-[12px] px-5 py-4 text-archive-white placeholder:text-archive-white/30 focus:outline-none focus:border-archive-amber/60 focus:bg-white/10 focus:ring-1 focus:ring-archive-amber/30 transition-all duration-300 backdrop-blur-sm"
               placeholder="Enter Squad Name..."
             />
           </div>
           
-          <div className="relative">
-            <label className="block text-[10px] uppercase tracking-[0.2em] font-bold mb-2 text-primary/60">Access Frequency ID</label>
+          <div className="relative flex flex-col gap-2">
+            <label className="text-[10px] text-archive-amber uppercase tracking-[0.2em] ml-1">Access Frequency ID</label>
             <input
               type="text"
               required
               value={teamId}
               onChange={(e) => setTeamId(e.target.value)}
-              className="w-full bg-white/40 border-2 border-primary/10 p-4 text-primary focus:outline-none focus:border-primary transition-all font-mono shadow-inner"
+              className="w-full bg-white/5 border border-white/10 rounded-[12px] px-5 py-4 text-archive-white placeholder:text-archive-white/30 focus:outline-none focus:border-archive-amber/60 focus:bg-white/10 focus:ring-1 focus:ring-archive-amber/30 transition-all duration-300 backdrop-blur-sm"
               placeholder="Enter Unique ID..."
             />
           </div>
@@ -86,26 +84,29 @@ export default function JoinPage() {
             <motion.div 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="p-3 bg-error/5 border-l-4 border-error text-error text-xs font-mono italic"
+              className="p-3 bg-red-900/20 border-l-4 border-red-500 text-red-400 text-xs font-mono italic"
             >
               [AUTH_NOTICE]: {error}
             </motion.div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-5 bg-primary border-2 border-primary text-white hover:bg-white hover:text-primary transition-all font-bold tracking-[0.2em] uppercase text-sm disabled:opacity-30 shadow-lg flex items-center justify-center gap-3 mt-4"
-          >
-            {loading ? "Synchronizing..." : "Access Archives"}
-          </button>
+          <div className="pt-4 group">
+            <button
+              type="submit"
+              disabled={loading}
+              className="relative w-full py-5 bg-archive-amber/10 border border-archive-amber text-archive-amber uppercase tracking-[0.3em] font-bold rounded-[12px] overflow-hidden transition-all duration-300 hover:text-archive-black hover:shadow-[0_0_30px_rgba(200,155,99,0.6)] active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 disabled:hover:shadow-none"
+            >
+              <span className="relative z-10">{loading ? "Synchronizing..." : "Establish Link"}</span>
+              {!loading && <div className="absolute inset-0 bg-archive-amber w-0 group-hover:w-full transition-all duration-500 ease-out z-0" />}
+            </button>
+          </div>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-primary/10 flex items-center justify-center gap-2 opacity-30">
-          <Shield size={12} />
-          <span className="text-[8px] uppercase tracking-[0.2em] font-bold font-mono">Secure Connection Established</span>
+        <div className="mt-8 pt-6 border-t border-archive-amber/10 flex items-center justify-center gap-2 opacity-40">
+          <Shield size={12} className="text-archive-amber" />
+          <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-archive-amber">Secure Connection Established</span>
         </div>
-      </Terminal>
+      </motion.div>
     </div>
   );
 }

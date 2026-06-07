@@ -6,6 +6,7 @@ export interface IPuzzle extends Document {
   acceptedAnswers: string[];
   hint1: string;
   hint2: string;
+  rewardLetter: string;
   order: number;
 }
 
@@ -15,6 +16,7 @@ const PuzzleSchema: Schema = new Schema({
   acceptedAnswers: { type: [String], required: true },
   hint1: { type: String, required: true },
   hint2: { type: String, required: true },
+  rewardLetter: { type: String, required: true, maxlength: 1, default: '?' },
   order: { type: Number, required: true, unique: true },
 });
 

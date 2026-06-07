@@ -10,6 +10,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'puzzles' | 'analytics' | 'settings'>('puzzles');
   const [puzzles, setPuzzles] = useState<any[]>([]);
   const [teams, setTeams] = useState<any[]>([]);
+  const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [editingPuzzle, setEditingPuzzle] = useState<any>(null);
   const router = useRouter();
@@ -36,11 +37,20 @@ export default function AdminDashboard() {
     }
   };
 
+  const fetchSettings = async () => {
+    const token = localStorage.getItem('adminToken');
+    const res = await fetch('/api/admin/settings', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (res.ok) {
+      setSettings(await res.json());
+    }
+  };
+
   useEffect(() => {
     const init = async () => {
       setLoading(true);
-      await fetchPuzzles();
-      await fetchTeams();
+      await Promise.all([fetchPuzzles(), fetchTeams(), fetchSettings()]);
       setLoading(false);
     };
     init();
@@ -55,6 +65,7 @@ export default function AdminDashboard() {
       hint1: formData.get('hint1'),
       hint2: formData.get('hint2'),
       audioUrl: formData.get('audioUrl'),
+      rewardLetter: formData.get('rewardLetter'),
     };
 
     if (editingPuzzle?._id) data._id = editingPuzzle._id;
@@ -72,6 +83,30 @@ export default function AdminDashboard() {
     if (res.ok) {
       setEditingPuzzle(null);
       fetchPuzzles();
+    }
+  };
+
+  const handleSaveSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = {
+      targetWord: formData.get('targetWord'),
+      attemptsPerPuzzle: Number(formData.get('attemptsPerPuzzle')),
+    };
+
+    const token = localStorage.getItem('adminToken');
+    const res = await fetch('/api/admin/settings', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      alert('Settings updated successfully');
+      fetchSettings();
     }
   };
 
@@ -159,9 +194,15 @@ export default function AdminDashboard() {
                     <label className="text-[10px] uppercase text-primary/60 block mb-1">Display Name</label>
                     <input name="correctAnswer" defaultValue={editingPuzzle?.correctAnswer} required className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none" />
                   </div>
-                  <div>
-                    <label className="text-[10px] uppercase text-primary/60 block mb-1">Accepted (comma separated)</label>
-                    <input name="acceptedAnswers" defaultValue={editingPuzzle?.acceptedAnswers?.join(', ')} required className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none" />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] uppercase text-primary/60 block mb-1">Accepted (comma separated)</label>
+                      <input name="acceptedAnswers" defaultValue={editingPuzzle?.acceptedAnswers?.join(', ')} required className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none" />
+                    </div>
+                    <div>
+                      <label className="text-[10px] uppercase text-primary/60 block mb-1">Reward Letter (1 char)</label>
+                      <input name="rewardLetter" defaultValue={editingPuzzle?.rewardLetter} maxLength={1} required className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none text-center font-bold" />
+                    </div>
                   </div>
                   <div>
                     <label className="text-[10px] uppercase text-primary/60 block mb-1">Audio URL / Public Path</label>
@@ -235,18 +276,27 @@ export default function AdminDashboard() {
         {activeTab === 'settings' && (
           <div className="max-w-md">
             <Terminal title="SYSTEM_CONFIG">
-              <div className="space-y-6">
-                <p className="text-sm text-primary/60 italic">Configuration module under development. Default values applied.</p>
+              <form onSubmit={handleSaveSettings} className="space-y-6">
+                <div>
+                  <label className="text-[10px] uppercase text-primary/60 block mb-1">Final Word (Target)</label>
+                  <input name="targetWord" defaultValue={settings?.targetWord} required maxLength={6} className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none uppercase font-mono tracking-widest" />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase text-primary/60 block mb-1">Attempts Per Puzzle</label>
+                  <input name="attemptsPerPuzzle" type="number" defaultValue={settings?.attemptsPerPuzzle} required className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none" />
+                </div>
+                <button type="submit" className="w-full py-3 bg-primary/10 border border-primary text-primary font-bold uppercase tracking-widest text-xs hover:bg-primary hover:text-background transition-all">
+                  SAVE CONFIGURATION
+                </button>
                 <div className="p-4 border border-primary/10 bg-primary/5 rounded">
-                  <div className="text-[10px] uppercase text-primary/40 mb-2">Current Settings</div>
+                  <div className="text-[10px] uppercase text-primary/40 mb-2">Current Rules</div>
                   <ul className="text-xs space-y-2 text-primary/80">
-                    <li>Attempts/Puzzle: 10</li>
-                    <li>Hint 1 Threshold: 2</li>
-                    <li>Hint 2 Threshold: 4</li>
-                    <li>Code Prefix: MEMORY</li>
+                    <li>Hint 1 Threshold: 2 attempts</li>
+                    <li>Hint 2 Threshold: 4 attempts</li>
+                    <li>Wordle Word: {settings?.targetWord}</li>
                   </ul>
                 </div>
-              </div>
+              </form>
             </Terminal>
           </div>
         )}
