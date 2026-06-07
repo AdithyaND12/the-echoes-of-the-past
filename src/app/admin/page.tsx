@@ -70,6 +70,7 @@ export default function AdminDashboard() {
 
     if (editingPuzzle?._id) data._id = editingPuzzle._id;
 
+    console.log('Saving node data:', data);
     const token = localStorage.getItem('adminToken');
     const res = await fetch('/api/admin/puzzles', {
       method: 'POST',
@@ -83,6 +84,10 @@ export default function AdminDashboard() {
     if (res.ok) {
       setEditingPuzzle(null);
       fetchPuzzles();
+      alert('Node saved successfully');
+    } else {
+      const err = await res.json();
+      alert(`Error saving node: ${err.error || 'Unknown error'}`);
     }
   };
 
@@ -108,6 +113,9 @@ export default function AdminDashboard() {
     if (res.ok) {
       alert('Settings updated successfully');
       fetchSettings();
+    } else {
+      const err = await res.json();
+      alert(`Error updating settings: ${err.error || 'Unknown error'}`);
     }
   };
 
@@ -217,7 +225,10 @@ export default function AdminDashboard() {
             </div>
 
             <div>
-              <Terminal title={editingPuzzle?._id ? "EDIT_NODE" : "NEW_NODE"}>
+              <Terminal 
+                title={editingPuzzle?._id ? "EDIT_NODE" : "NEW_NODE"}
+                key={editingPuzzle?._id || 'new-puzzle'}
+              >
                 <form onSubmit={handleSavePuzzle} className="space-y-4">
                   <div>
                     <label className="text-[10px] uppercase text-primary/60 block mb-1">Display Name</label>

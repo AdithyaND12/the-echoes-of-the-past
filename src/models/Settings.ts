@@ -14,7 +14,7 @@ const SettingsSchema: Schema = new Schema({
   attemptsPerPuzzle: { type: Number, default: 10 },
   timeLimit: { type: Number, default: 300 },
   completionCodePrefix: { type: String, default: 'MEMORY' },
-  adminPasswordHash: { type: String, required: true },
+  adminPasswordHash: { type: String, default: '' },
   themeColor: { type: String, default: '#00E5FF' },
   targetWord: { type: String, default: 'MEMORY' },
   masterAudioUrl: { type: String, default: '' },

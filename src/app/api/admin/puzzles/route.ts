@@ -22,18 +22,23 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   if (!isAdmin(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   
-  await dbConnect();
-  const data = await req.json();
+  try {
+    await dbConnect();
+    const data = await req.json();
 
-  if (data._id) {
-    // Update
-    const updated = await Puzzle.findByIdAndUpdate(data._id, data, { new: true });
-    return NextResponse.json(updated);
-  } else {
-    // Create
-    const count = await Puzzle.countDocuments();
-    const newPuzzle = await Puzzle.create({ ...data, order: count + 1 });
-    return NextResponse.json(newPuzzle);
+    if (data._id) {
+      // Update
+      const updated = await Puzzle.findByIdAndUpdate(data._id, data, { new: true });
+      return NextResponse.json(updated);
+    } else {
+      // Create
+      const count = await Puzzle.countDocuments();
+      const newPuzzle = await Puzzle.create({ ...data, order: count + 1 });
+      return NextResponse.json(newPuzzle);
+    }
+  } catch (err: any) {
+    console.error('Error saving puzzle:', err);
+    return NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 });
   }
 }
 

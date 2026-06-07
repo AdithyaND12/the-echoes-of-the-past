@@ -29,15 +29,20 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   if (!isAdmin(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   
-  await dbConnect();
-  const data = await req.json();
+  try {
+    await dbConnect();
+    const data = await req.json();
 
-  let settings = await Settings.findOne();
-  if (settings) {
-    settings = await Settings.findByIdAndUpdate(settings._id, data, { new: true });
-  } else {
-    settings = await Settings.create(data);
+    let settings = await Settings.findOne();
+    if (settings) {
+      settings = await Settings.findByIdAndUpdate(settings._id, data, { new: true });
+    } else {
+      settings = await Settings.create(data);
+    }
+
+    return NextResponse.json(settings);
+  } catch (err: any) {
+    console.error('Error saving settings:', err);
+    return NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 });
   }
-
-  return NextResponse.json(settings);
 }
