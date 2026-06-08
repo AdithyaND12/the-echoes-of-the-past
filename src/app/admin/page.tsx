@@ -130,6 +130,20 @@ export default function AdminDashboard() {
     fetchPuzzles();
   };
 
+  const formatTime = (startTime: string, endTime?: string) => {
+    const start = new Date(startTime).getTime();
+    const end = endTime ? new Date(endTime).getTime() : Date.now();
+    const diff = Math.floor((end - start) / 1000);
+    
+    const h = Math.floor(diff / 3600);
+    const m = Math.floor((diff % 3600) / 60);
+    const s = diff % 60;
+    
+    if (h > 0) return `${h}h ${m}m ${s}s`;
+    if (m > 0) return `${m}m ${s}s`;
+    return `${s}s`;
+  };
+
   if (loading) return <div className="p-10 text-primary font-mono">LOADING SYSTEM...</div>;
 
   return (
@@ -279,6 +293,7 @@ export default function AdminDashboard() {
                     <th className="p-4 uppercase text-primary/60">Squad</th>
                     <th className="p-4 uppercase text-primary/60">ID</th>
                     <th className="p-4 uppercase text-primary/60">Progress</th>
+                    <th className="p-4 uppercase text-primary/60">Time</th>
                     <th className="p-4 uppercase text-primary/60">Status</th>
                   </tr>
                 </thead>
@@ -295,6 +310,7 @@ export default function AdminDashboard() {
                           <span>{t.currentPuzzleIndex}/{puzzles.length}</span>
                         </div>
                       </td>
+                      <td className="p-4 text-primary/60">{formatTime(t.startTime, t.endTime)}</td>
                       <td className="p-4">
                         {t.isCompleted ? (
                           <span className="text-success glow-text-success">CALIBRATED</span>

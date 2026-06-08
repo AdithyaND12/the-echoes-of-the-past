@@ -10,8 +10,10 @@
 }
 
 :root {
-  --background: #1A1A1A;
+  --background: #2D2D2D;
   --foreground: #FFFFFF;
+  --archive-amber: #D4A870;
+  --archive-green: #8CFF8C;
 }
 
 body {
@@ -27,6 +29,29 @@ body {
   background-repeat: no-repeat;
 }
 
+.radial-spotlight {
+  background: radial-gradient(circle at 50% 50%, rgba(212, 168, 112, 0.15) 0%, rgba(26, 26, 26, 0) 70%);
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
 .crt-overlay::after {
   content: "";
   position: fixed;
@@ -35,12 +60,25 @@ body {
   width: 100vw;
   height: 100vh;
   background: 
-    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
   background-size: 100% 4px, 3px 100%;
   pointer-events: none;
   z-index: 100;
-  opacity: 0.6;
+  opacity: 0.4;
+}
+
+.vhs-scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.03), transparent);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 101;
+  animation: scanline 8s linear infinite;
 }
 
 /* Custom Scrollbar */
@@ -49,11 +87,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1A1A1A;
+  background: #2D2D2D;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #D4A870;
-  border: 3px solid #1A1A1A;
+  border: 3px solid #2D2D2D;
   border-radius: 10px;
 }

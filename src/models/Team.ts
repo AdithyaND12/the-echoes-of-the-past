@@ -7,6 +7,7 @@ export interface ITeam extends Document {
   attempts: number;
   startTime: Date;
   endTime?: Date;
+  timeTaken?: number; // Time taken in seconds
   score: number;
   isCompleted: boolean;
   collectedLetters: string[];
@@ -20,6 +21,7 @@ const TeamSchema: Schema = new Schema({
   attempts: { type: Number, default: 0 },
   startTime: { type: Date, default: Date.now },
   endTime: { type: Date },
+  timeTaken: { type: Number },
   score: { type: Number, default: 0 },
   isCompleted: { type: Boolean, default: false },
   collectedLetters: { type: [String], default: [] },

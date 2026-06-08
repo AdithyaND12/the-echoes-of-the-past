@@ -34,7 +34,7 @@ export async function GET(req: Request) {
     return NextResponse.json({
       teamName: team.name,
       completionCode,
-      timeTaken: team.endTime ? (team.endTime.getTime() - team.startTime.getTime()) / 1000 : 0,
+      timeTaken: team.timeTaken || (team.endTime ? (team.endTime.getTime() - team.startTime.getTime()) / 1000 : 0),
       isCompleted: true
     });
   } catch (err) {

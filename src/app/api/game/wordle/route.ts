@@ -37,9 +37,11 @@ export async function POST(req: Request) {
     const normalizedTarget = targetWord.toUpperCase().trim();
 
     if (normalizedGuess === normalizedTarget) {
+      const now = new Date();
       team.isCompleted = true;
       team.finalWordSolved = true;
-      team.endTime = new Date();
+      team.endTime = now;
+      team.timeTaken = Math.floor((now.getTime() - team.startTime.getTime()) / 1000);
       await team.save();
       console.log(`Team ${team.teamId} completed:`, team.isCompleted);
 
