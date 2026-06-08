@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} antialiased crt-overlay font-mono overflow-x-hidden`}>
+      <body className={`${jetbrainsMono.variable} antialiased crt-overlay noise crt-startup font-mono overflow-x-hidden`}>
         <GlobalOverlays />
         <ParticleBackground />
         <main className="relative z-10 min-h-screen">

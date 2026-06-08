@@ -16,6 +16,17 @@ export default function AdminDashboard() {
   const [editingPuzzle, setEditingPuzzle] = useState<any>(null);
   const router = useRouter();
 
+  const [now, setNow] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setNow(Date.now()), 0);
+    const int = setInterval(() => setNow(Date.now()), 1000);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(int);
+    };
+  }, []);
+
   const fetchPuzzles = async () => {
     const token = localStorage.getItem('adminToken');
     const res = await fetch('/api/admin/puzzles', {
@@ -132,7 +143,7 @@ export default function AdminDashboard() {
 
   const formatTime = (startTime: string, endTime?: string) => {
     const start = new Date(startTime).getTime();
-    const end = endTime ? new Date(endTime).getTime() : Date.now();
+    const end = endTime ? new Date(endTime).getTime() : now;
     const diff = Math.floor((end - start) / 1000);
     
     const h = Math.floor(diff / 3600);

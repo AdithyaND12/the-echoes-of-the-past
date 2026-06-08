@@ -1,157 +1,177 @@
 'use client';
 
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { ChevronRight, Play, Search } from "lucide-react";
-import { useState } from "react";
+import { ChevronRight, Play, Database, History, Wifi, AlertTriangle } from "lucide-react";
+import Terminal from "@/components/Terminal";
 
 export default function WelcomePage() {
-  const [hoveredHotspot, setHoveredHotspot] = useState<string | null>(null);
-  
-  // Parallax Effect
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const rotateX = useTransform(y, [-300, 300], [2, -2]);
-  const rotateY = useTransform(x, [-500, 500], [-2, 2]);
-
-  function handleMouseMove(event: React.MouseEvent) {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    x.set(event.clientX - centerX);
-    y.set(event.clientY - centerY);
-  }
-
-  const hotspots = [
-    { id: 'toy', top: '75%', left: '10%', label: 'Corrupted Toy Fragment' },
-    { id: 'poster', top: '15%', left: '55%', label: 'Aged Media Artifact' },
-    { id: 'bed', top: '65%', left: '80%', label: 'Resting Echo' },
-  ];
-
   return (
-    <div 
-      className="relative min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden"
-      onMouseMove={handleMouseMove}
-    >
-      {/* Interactive Hotspots */}
-      {hotspots.map((spot) => (
-        <motion.div
-          key={spot.id}
-          className="absolute w-24 h-24 z-20 cursor-crosshair hidden md:block"
-          style={{ top: spot.top, left: spot.left }}
-          onHoverStart={() => setHoveredHotspot(spot.label)}
-          onHoverEnd={() => setHoveredHotspot(null)}
-        >
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
-            transition={{ repeat: Infinity, duration: 3 }}
-            className="w-full h-full rounded-full border border-archive-amber/20 bg-archive-amber/5 flex items-center justify-center"
-          >
-            <div className="w-1 h-1 bg-archive-amber/40 rounded-full" />
-          </motion.div>
-        </motion.div>
-      ))}
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-4">
+      {/* 2007 Desktop Style Layout */}
+      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* Left Sidebar - System Info */}
+        <div className="lg:col-span-3 space-y-6 hidden lg:block">
+          <Terminal title="SYSTEM_INFO">
+            <div className="space-y-4 text-[11px] font-mono text-[#5D4037]">
+              <div className="flex items-center gap-2">
+                <Wifi size={12} className="text-[#2E7D32]" />
+                <span>CONNECTION: WEAK</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Database size={12} className="text-[#3A6EA5]" />
+                <span>DRIVE: [C:] 82% FULL</span>
+              </div>
+              <div className="h-px bg-[#D7CCC8] my-2" />
+              <div className="text-[10px] text-[#8D6E63] italic">
+                &quot;Finding what was lost in the noise of 2007...&quot;
+              </div>
+            </div>
+          </Terminal>
 
-      {/* Hotspot Tooltip */}
-      {hoveredHotspot && (
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
-        >
-          <div className="px-4 py-2 bg-archive-black/80 border border-archive-amber/40 backdrop-blur-xl rounded-lg flex items-center gap-3">
-            <Search size={14} className="text-archive-amber animate-pulse" />
-            <span className="text-[10px] text-archive-amber font-black uppercase tracking-[0.3em]">{hoveredHotspot} Detected</span>
+          <div className="win-bevel p-3 bg-[#D7CCC8] space-y-2">
+            <div className="text-[10px] font-bold text-[#5D4037] uppercase flex items-center gap-2">
+              <History size={12} /> Recent Fragments
+            </div>
+            <div className="text-[9px] font-mono text-[#8D6E63] space-y-1">
+              <div>&gt; _IMG_0422.JPG</div>
+              <div>&gt; _CLIP_RE_02.MOV</div>
+              <div>&gt; _TRACK_04.MP3</div>
+            </div>
           </div>
-        </motion.div>
-      )}
+        </div>
 
-      {/* Main Content with Parallax */}
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="relative z-10 w-full max-w-2xl p-8 md:p-16 rounded-[24px] bg-archive-black/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.6)] flex flex-col items-center"
-      >
-        {/* Cinematic Title Section */}
-        <div className="flex flex-col items-center w-full mb-12">
+
+        {/* Main Content Area */}
+        <div className="lg:col-span-6 space-y-8">
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-[10px] text-archive-amber/60 font-black uppercase tracking-[0.6em] mb-6 flex items-center gap-4"
+            className="text-center space-y-4"
           >
-            <div className="h-px w-8 bg-archive-amber/20" />
-            Archive Access Protocol
-            <div className="h-px w-8 bg-archive-amber/20" />
+            {/* Vintage Site Header */}
+            <div className="inline-block px-8 py-2 bg-[#D7CCC8] border-t-2 border-x-2 border-[#F5E6D3] rounded-t-xl shadow-[0_-4px_10px_rgba(0,0,0,0.1)] relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
+              <h2 className="text-[#3A6EA5] text-[10px] font-black italic tracking-[0.2em] font-sans uppercase">
+                Family Media Archive v1.0.4
+              </h2>
+            </div>
+            
+            <div className="win-bevel paper-texture p-8 md:p-12 shadow-2xl relative overflow-hidden group">
+              {/* Coffee Stain / Aging Effect */}
+              <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#3E2723] opacity-[0.03] rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-[#D4A870] opacity-[0.05] rounded-full blur-3xl pointer-events-none" />
+
+              {/* Fake Watermark */}
+              <div className="absolute top-4 right-6 opacity-5 rotate-[15deg] pointer-events-none select-none font-black text-6xl text-[#3E2723] italic">
+                2007
+              </div>
+
+              <motion.div
+                initial={{ scale: 0.98 }}
+                animate={{ scale: 1 }}
+                className="space-y-10 relative z-10"
+              >
+                <div className="space-y-4">
+                  <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-[#3E2723] drop-shadow-md font-sans italic leading-[0.9]">
+                    The Echoes <br />
+                    <span className="text-[#3A6EA5] not-italic">Of The Past</span>
+                  </h1>
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="h-px bg-[#D7CCC8] flex-1" />
+                    <p className="text-[10px] text-[#8D6E63] font-mono tracking-[0.3em] uppercase italic px-4">
+                      Restoring Archive...
+                    </p>
+                    <div className="h-px bg-[#D7CCC8] flex-1" />
+                  </div>
+                </div>
+
+                <div className="space-y-8">
+                  <div className="relative">
+                    <div className="absolute -left-4 top-0 bottom-0 w-1 bg-[#3A6EA5]/20" />
+                    <p className="text-sm md:text-base text-[#4E342E] leading-relaxed font-sans max-w-sm mx-auto italic opacity-90">
+                      &quot;A collection of sensory data recovered from the 2005-2008 epoch. 
+                      Identify the familiar signals to calibrate the restoration process.&quot;
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-8">
+                    <Link href="/join" className="w-full max-w-[280px]">
+                      <button className="glossy-button w-full py-5 bg-[#3A6EA5] text-[#F5E6D3] text-sm font-black rounded-xl flex items-center justify-center gap-3 group hover:scale-[1.02] active:scale-[0.98] transition-all">
+                        <Play size={18} fill="#F5E6D3" className="group-hover:scale-110 transition-transform" />
+                        ACCESS ARCHIVE
+                        <ChevronRight size={18} />
+                      </button>
+                    </Link>
+
+                    {/* Progress Bar - Improved Old Style */}
+                    <div className="w-full max-w-[240px] space-y-2">
+                      <div className="flex justify-between text-[10px] font-mono text-[#8D6E63] font-bold">
+                        <span className="animate-pulse">LOAD_EVENT_SYNC...</span>
+                        <span>82%</span>
+                      </div>
+                      <div className="h-5 bg-[#D7CCC8] border-2 border-[#A1887F] p-0.5 overflow-hidden shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]">
+                        <motion.div 
+                          initial={{ width: "0%" }}
+                          animate={{ width: "82%" }}
+                          transition={{ duration: 2.5, ease: "easeOut" }}
+                          className="h-full bg-gradient-to-r from-[#3A6EA5] to-[#5C7C99] shadow-[inset_0_4px_4px_rgba(255,255,255,0.3)] relative overflow-hidden"
+                        >
+                          <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.1)_50%,rgba(255,255,255,0.1)_75%,transparent_75%,transparent)] bg-[length:20px_20px] animate-[scanline_2s_linear_infinite]" />
+                        </motion.div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
-
-          <h1 className="text-4xl md:text-7xl font-black uppercase tracking-[-0.05em] text-archive-white text-center leading-[0.9] perspective-1000">
-            <span className="opacity-40 block text-lg tracking-[0.4em] mb-4 font-mono">The</span>
-            <span className="relative inline-block animate-[glitch_5s_infinite] select-none">
-              ECHOES
-              <span className="absolute inset-0 text-red-500/20 translate-x-[1px] -z-10">ECHOES</span>
-              <span className="absolute inset-0 text-blue-500/20 -translate-x-[1px] -z-10">ECHOES</span>
-            </span>
-            <br /> 
-            <span className="text-archive-amber drop-shadow-[0_0_15px_rgba(212,168,112,0.4)] tracking-[0.1em] font-mono text-2xl md:text-4xl">
-              OF THE PAST
-            </span>
-            <motion.span 
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ repeat: Infinity, duration: 1 }}
-              className="inline-block w-[0.15em] h-[0.8em] bg-archive-amber ml-4 align-baseline shadow-[0_0_15px_#D4A870]"
-            />
-          </h1>
         </div>
 
-        <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-archive-amber/30 to-transparent mb-10" />
-        
-        <p className="text-xs md:text-sm text-archive-white/50 mb-16 font-mono leading-relaxed max-w-sm text-center tracking-widest uppercase italic">
-          Calibrate the simulation by identifying the sensory signals that defined a generation.
-        </p>
-        
-        {/* Premium CTA */}
-        <div className="flex flex-col items-center w-full max-w-xs">
-          <Link href="/join" className="w-full group perspective-1000">
-            <motion.button 
-              whileHover={{ scale: 1.02, translateZ: 20 }}
-              whileTap={{ scale: 0.98 }}
-              className="relative w-full py-5 bg-archive-amber/5 border border-archive-amber/40 text-archive-amber uppercase tracking-[0.5em] font-black rounded-xl overflow-hidden transition-all duration-500 hover:border-archive-amber hover:shadow-[0_0_40px_rgba(212,168,112,0.3)] text-xs flex items-center justify-center gap-4"
-            >
-              <span className="relative z-10 flex items-center gap-3">
-                <Play size={14} fill="currentColor" className="ml-1" />
-                Access Memories
-                <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-archive-amber/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </motion.button>
-          </Link>
+        {/* Right Sidebar - Alerts/System */}
+        <div className="lg:col-span-3 space-y-6 hidden lg:block">
+          <Terminal title="NOTIFICATIONS">
+            <div className="space-y-4">
+              <div className="flex items-start gap-2 text-[11px] text-[#B71C1C] bg-[#EFEBE9] p-2 border border-[#D7CCC8]">
+                <AlertTriangle size={14} className="shrink-0" />
+                <span>WARNING: File &quot;MEMORY_001&quot; is corrupted. Calibration required.</span>
+              </div>
+              <div className="text-[10px] text-[#8D6E63] font-mono border-t border-[#D7CCC8] pt-2">
+                &quot;Every echo has found its home.&quot;
+              </div>
+            </div>
+          </Terminal>
 
-          {/* Loading Indicator */}
-          <div className="w-full h-[2px] bg-white/5 mt-12 rounded-full overflow-hidden relative border border-white/5">
-            <motion.div 
-              animate={{ 
-                left: ["-100%", "200%"],
-                opacity: [0, 1, 0]
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-archive-green/40 to-transparent"
-            />
-          </div>
-          <div className="mt-4 text-[8px] text-archive-white/20 font-mono uppercase tracking-[0.4em]">
-            Syncing Archive Streams...
+          <div className="win-bevel bg-[#3A6EA5] p-4 text-[#F5E6D3]">
+            <h4 className="text-[11px] font-bold mb-2 flex items-center gap-2">
+              <History size={14} /> ARCHIVE_LOG
+            </h4>
+            <div className="text-[9px] font-mono opacity-80 space-y-1">
+              <div>[14:22] SYNC_START</div>
+              <div>[14:23] BUFFER_DATA</div>
+              <div>[14:25] RETRIEVING...</div>
+            </div>
           </div>
         </div>
-      </motion.div>
 
-      {/* Bottom HUD */}
-      <div className="fixed bottom-8 left-8 hidden md:block z-50">
-        <div className="font-mono text-[8px] text-archive-white/30 uppercase tracking-[0.5em] space-y-1">
-          <div>Sector: Residential_04</div>
-          <div>Depth: 0.042m</div>
+      </div>
+
+      {/* Bottom Taskbar Style Text */}
+      <div className="fixed bottom-0 left-0 w-full bg-[#D7CCC8] border-t-2 border-[#F5E6D3] px-4 py-1 flex justify-between items-center z-[1001] hidden md:flex">
+        <div className="flex items-center gap-4">
+          <div className="bg-[#2E7D32] px-3 py-1 border-r-2 border-[#F5E6D3] text-[#F5E6D3] text-[11px] font-bold flex items-center gap-2 cursor-pointer hover:brightness-110">
+            <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center">
+              <div className="w-2 h-2 bg-[#2E7D32]" />
+            </div>
+            START
+          </div>
+          <div className="text-[10px] text-[#5D4037] font-bold uppercase tracking-widest font-sans">
+            Rec_Archive.exe
+          </div>
+        </div>
+        <div className="text-[10px] text-[#5D4037] font-bold font-mono bg-[#EFEBE9] px-4 py-1 border-l-2 border-[#A1887F]">
+          SESSION: 2007_RESTORED
         </div>
       </div>
     </div>

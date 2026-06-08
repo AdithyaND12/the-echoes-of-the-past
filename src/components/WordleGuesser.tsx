@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, ShieldAlert, Key } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, Key, ChevronRight } from 'lucide-react';
 
 interface WordleGuesserProps {
   onSuccess: () => void;
@@ -56,7 +56,6 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
       const data = await res.json();
       if (data.correct) {
         setStatus({ type: 'success', message: data.message });
-        console.log('Wordle correct, calling onSuccess');
         setTimeout(onSuccess, 2000);
       } else {
         setStatus({ type: 'error', message: data.message });
@@ -70,31 +69,54 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
   };
 
   return (
-    <div className="bg-archive-black/40 backdrop-blur-xl border border-archive-amber/30 p-8 rounded-[16px] shadow-[0_0_40px_rgba(200,155,99,0.1)]">
-      <div className="flex items-center gap-3 mb-8 border-b border-archive-amber/10 pb-4">
-        <Key className="text-archive-amber animate-pulse" size={20} />
-        <h3 className="text-archive-amber uppercase tracking-[0.3em] font-black text-sm">Master Override Sequence</h3>
+    <div className="win-bevel paper-texture p-8 md:p-10 shadow-2xl relative overflow-hidden">
+      {/* Encryption Overlay */}
+      <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none select-none">
+        <div className="text-[40px] font-black font-mono leading-none">KEY_GEN_V2</div>
       </div>
 
-      <div className="mb-8">
-        <div className="text-[10px] text-archive-white/40 uppercase tracking-widest mb-3">Available Fragments (Jumbled Pool):</div>
-        <div className="flex flex-wrap gap-3">
+      <div className="flex items-center gap-4 mb-10 border-b-2 border-[#D7CCC8] pb-6">
+        <div className="p-3 bg-[#3A6EA5] rounded-xl shadow-xl border-2 border-[#F5E6D3]/20">
+          <Key className="text-[#F5E6D3] animate-pulse" size={24} />
+        </div>
+        <div>
+          <h3 className="text-[#3A6EA5] text-[10px] uppercase tracking-[0.3em] font-black italic">Security_Bypass</h3>
+          <div className="text-2xl font-black font-sans text-[#3E2723] italic tracking-tighter uppercase">Master_Override.SYS</div>
+        </div>
+      </div>
+
+      <div className="mb-12 bg-[#EFEBE9]/60 border-2 border-[#D7CCC8] p-8 shadow-inner relative overflow-hidden rounded-xl">
+        <div className="absolute top-2 right-4 opacity-20 font-bold text-[8px] font-mono tracking-widest uppercase">Encryption_Pool_Active</div>
+        <div className="text-[10px] text-[#3A6EA5] uppercase tracking-[0.3em] mb-6 font-black italic border-b border-[#D7CCC8]/50 pb-2 flex items-center gap-3">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#8CFF8C] shadow-[0_0_8px_#8CFF8C]" /> Recovered_Fragments:
+        </div>
+        <div className="flex flex-wrap gap-4">
           {collectedLetters.map((l, i) => (
-            <div
+            <motion.div
               key={i}
-              className="w-10 h-12 border-2 flex items-center justify-center font-mono font-bold rounded-lg text-lg transition-all duration-500 border-archive-green bg-archive-green/10 text-archive-green shadow-[0_0_15px_rgba(124,255,124,0.3)] scale-110"
+              initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
+              animate={{ scale: 1, opacity: 1, rotate: 0 }}
+              className="w-12 h-14 border-2 border-[#3A6EA5] bg-[#3A6EA5]/10 flex items-center justify-center font-mono font-black rounded-lg text-2xl text-[#3A6EA5] shadow-[inset_0_2px_10px_rgba(58,110,165,0.1),0_4px_10px_rgba(0,0,0,0.1)]"
             >
               {l}
-            </div>
+            </motion.div>
           ))}
+          {collectedLetters.length === 0 && (
+            <div className="text-[10px] font-mono text-[#8D6E63] italic uppercase tracking-widest py-2">No fragments recovered yet.</div>
+          )}
         </div>
-        <p className="mt-4 text-[10px] text-archive-amber/50 italic font-mono">
-          &gt; Collect all letters by identifying songs, then unscramble them to solve the override.
-        </p>
+        <div className="mt-8 space-y-2">
+          <p className="text-[10px] text-[#4E342E] italic font-bold leading-relaxed opacity-70">
+            &gt; Unscramble the recovered fragments to bypass central security protocols.
+          </p>
+          <p className="text-[10px] text-[#4E342E] italic font-bold leading-relaxed opacity-70">
+            &gt; All data streams must be aligned for final archive restoration.
+          </p>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <div className="flex justify-between gap-2">
+      <form onSubmit={handleSubmit} className="space-y-12">
+        <div className="flex justify-between gap-4">
           {guess.map((char, i) => (
             <input
               key={i}
@@ -104,32 +126,44 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
               value={char}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
-              className="w-full h-14 bg-white/5 border border-white/20 rounded-[8px] text-center text-2xl font-mono text-archive-white focus:outline-none focus:border-archive-amber focus:bg-white/10 transition-all uppercase"
+              className="w-full h-20 bg-[#F5F1ED] border-2 border-[#A1887F] rounded-xl text-center text-4xl font-mono font-black text-[#3E2723] focus:outline-none focus:border-[#3A6EA5] focus:bg-white transition-all uppercase shadow-[inset_2px_2px_8px_rgba(0,0,0,0.05)]"
             />
           ))}
         </div>
 
-        <button
-          type="submit"
-          disabled={loading || guess.join('').length < 6}
-          className="w-full py-4 bg-archive-amber/20 border border-archive-amber text-archive-amber uppercase tracking-[0.4em] font-black text-xs rounded-[8px] hover:bg-archive-amber hover:text-archive-black transition-all disabled:opacity-30 disabled:hover:bg-archive-amber/20 disabled:hover:text-archive-amber"
-        >
-          {loading ? 'Initializing Override...' : 'Execute Override'}
-        </button>
+        <div className="flex flex-col items-center gap-6">
+          <button
+            type="submit"
+            disabled={loading || guess.join('').length < 6}
+            className="glossy-button w-full max-w-md py-6 bg-[#3A6EA5] text-[#F5E6D3] uppercase tracking-[0.3em] font-black text-sm rounded-2xl shadow-2xl disabled:opacity-50 disabled:grayscale transition-all"
+          >
+            <span className="flex items-center justify-center gap-3">
+              {loading ? 'CALIBRATING_HASH...' : 'EXECUTE OVERRIDE'}
+              {!loading && <ChevronRight size={18} />}
+            </span>
+          </button>
+          
+          <div className="text-[9px] font-mono text-[#8D6E63] uppercase tracking-[0.3em] font-black flex items-center gap-3 italic">
+            <div className="w-2 h-2 rounded-full bg-[#3A6EA5] animate-pulse" />
+            Bypassing Memory_Security_Protocol_v8.4.1
+          </div>
+        </div>
       </form>
 
       <AnimatePresence>
         {status.type !== 'none' && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className={`mt-6 p-4 rounded border flex items-center gap-3 font-mono text-xs uppercase tracking-tighter ${
-              status.type === 'success' ? 'border-archive-green/30 text-archive-green bg-archive-green/5' : 'border-red-500/30 text-red-400 bg-red-900/10'
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className={`mt-10 p-6 border-2 flex items-center gap-5 font-mono text-[10px] uppercase tracking-[0.2em] shadow-2xl font-black rounded-xl ${
+              status.type === 'success' 
+                ? 'border-[#2E7D32] text-[#1B5E20] bg-[#E8F5E9]' 
+                : 'border-[#B71C1C] text-[#C62828] bg-[#FFEBEE]'
             }`}
           >
-            {status.type === 'success' ? <ShieldCheck size={18} /> : <ShieldAlert size={18} />}
-            {status.message}
+            {status.type === 'success' ? <ShieldCheck size={24} className="shrink-0" /> : <ShieldAlert size={24} className="shrink-0" />}
+            <span>{status.message}</span>
           </motion.div>
         )}
       </AnimatePresence>

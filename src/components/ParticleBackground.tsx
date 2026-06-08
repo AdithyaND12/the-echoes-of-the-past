@@ -39,7 +39,7 @@ export default function ParticleBackground() {
         },
         particles: {
           color: {
-            value: "#D4A870",
+            value: ["#D4A870", "#8D6E63", "#3A6EA5"],
           },
           links: {
             enable: false,
@@ -51,7 +51,7 @@ export default function ParticleBackground() {
               default: "out",
             },
             random: true,
-            speed: 0.3,
+            speed: 0.15,
             straight: false,
           },
           number: {
@@ -59,14 +59,14 @@ export default function ParticleBackground() {
               enable: true,
               area: 800,
             },
-            value: 40,
+            value: 60,
           },
           opacity: {
-            value: { min: 0.1, max: 0.4 },
+            value: { min: 0.05, max: 0.2 },
             animation: {
               enable: true,
-              speed: 0.5,
-              minimumValue: 0.1,
+              speed: 0.3,
+              minimumValue: 0.05,
               sync: false,
             }
           },
@@ -74,7 +74,7 @@ export default function ParticleBackground() {
             type: "circle",
           },
           size: {
-            value: { min: 0.5, max: 1.5 },
+            value: { min: 0.5, max: 1.2 },
           },
         },
         detectRetina: true,
