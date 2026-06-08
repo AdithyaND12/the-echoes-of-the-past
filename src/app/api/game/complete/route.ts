@@ -21,6 +21,7 @@ export async function GET(req: Request) {
     }
 
     const team = await Team.findOne({ teamId: decoded.teamId });
+    console.log(`Checking completion for team ${decoded.teamId}:`, team?.isCompleted);
     if (!team || !team.isCompleted) {
       return NextResponse.json({ error: 'Session not completed' }, { status: 400 });
     }

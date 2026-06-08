@@ -44,9 +44,10 @@ export async function GET(req: Request) {
 
     if (!currentPuzzle) {
       return NextResponse.json({ 
-        isCompleted: true, 
+        allSongsSolved: true, 
         message: 'Simulation Calibration Complete',
-        jumbledLetters
+        collectedLetters: team.collectedLetters,
+        jumbledLetters: team.collectedLetters
       });
     }
 

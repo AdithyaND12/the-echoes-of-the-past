@@ -41,6 +41,7 @@ export async function POST(req: Request) {
       team.finalWordSolved = true;
       team.endTime = new Date();
       await team.save();
+      console.log(`Team ${team.teamId} completed:`, team.isCompleted);
 
       return NextResponse.json({ 
         correct: true, 

@@ -56,6 +56,7 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
       const data = await res.json();
       if (data.correct) {
         setStatus({ type: 'success', message: data.message });
+        console.log('Wordle correct, calling onSuccess');
         setTimeout(onSuccess, 2000);
       } else {
         setStatus({ type: 'error', message: data.message });
@@ -78,21 +79,14 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
       <div className="mb-8">
         <div className="text-[10px] text-archive-white/40 uppercase tracking-widest mb-3">Available Fragments (Jumbled Pool):</div>
         <div className="flex flex-wrap gap-3">
-          {jumbledLetters.map((l, i) => {
-            const isCollected = collectedLetters.includes(l);
-            return (
-              <div 
-                key={i} 
-                className={`w-10 h-12 border-2 flex items-center justify-center font-mono font-bold rounded-lg text-lg transition-all duration-500 ${
-                  isCollected 
-                    ? 'border-archive-green bg-archive-green/10 text-archive-green shadow-[0_0_15px_rgba(124,255,124,0.3)] scale-110' 
-                    : 'border-white/10 bg-white/5 text-white/10'
-                }`}
-              >
-                {l}
-              </div>
-            );
-          })}
+          {collectedLetters.map((l, i) => (
+            <div
+              key={i}
+              className="w-10 h-12 border-2 flex items-center justify-center font-mono font-bold rounded-lg text-lg transition-all duration-500 border-archive-green bg-archive-green/10 text-archive-green shadow-[0_0_15px_rgba(124,255,124,0.3)] scale-110"
+            >
+              {l}
+            </div>
+          ))}
         </div>
         <p className="mt-4 text-[10px] text-archive-amber/50 italic font-mono">
           &gt; Collect all letters by identifying songs, then unscramble them to solve the override.

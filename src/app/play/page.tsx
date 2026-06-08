@@ -33,16 +33,19 @@ export default function PlayPage() {
       });
       const data = await res.json();
 
+      console.log('fetchPuzzle data:', data);
+
       if (res.ok) {
-        if (data.isCompleted) {
-          router.push('/success');
-        } else if (data.noPuzzles) {
-          setNoPuzzles(true);
-        } else if (data.message === 'Simulation Calibration Complete') {
+        if (data.allSongsSolved || data.message === 'Simulation Calibration Complete') {
           // All songs finished, but wordle not solved yet
           setPuzzle({ allSongsDone: true, attempts: 0 });
           setCollectedLetters(data.collectedLetters || []);
           setJumbledLetters(data.jumbledLetters || []);
+        } else if (data.noPuzzles) {
+          setNoPuzzles(true);
+        } else if (data.isCompleted) {
+          console.log('Puzzle completed, redirecting to /success');
+          router.push('/success');
         } else {
           setPuzzle(data.puzzle);
           setHints({ h1: data.puzzle.hint1, h2: data.puzzle.hint2 });
@@ -93,7 +96,8 @@ export default function PlayPage() {
         setTimeout(() => {
           setStatus({ type: 'none', message: '' });
           if (data.isCompleted) {
-            router.push('/success');
+            setShowWordle(true);
+            setPuzzle((prev: any) => ({ ...prev, allSongsDone: true }));
           } else {
             fetchPuzzle();
           }
@@ -210,24 +214,6 @@ export default function PlayPage() {
                       <h3 className="text-archive-amber/50 text-[10px] uppercase tracking-[0.4em] font-bold">Tape Identification</h3>
                       <div className="text-2xl font-bold font-mono text-archive-white/90">
                         RE_SESSION_0{puzzle.nodeIndex}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-archive-amber/50 text-[10px] uppercase tracking-[0.4em] font-bold">Fragments Retrieved</div>
-                      <div className="flex gap-1 justify-end mt-1">
-                        {collectedLetters.map((l, i) => (
-                          <span key={i} className="w-5 h-5 flex items-center justify-center bg-archive-green/20 border border-archive-green/40 text-archive-green text-[10px] rounded font-bold font-mono">
-                            {l}
-                          </span>
-                        ))}
-                        {Array.from({ length: Math.max(0, (jumbledLetters.length || 6) - collectedLetters.length) }).map((_, i) => (
-                          <span key={i} className="w-5 h-5 flex items-center justify-center bg-white/5 border border-white/10 text-white/20 text-[10px] rounded font-bold font-mono">
-                            ?
-                          </span>
-                        ))}
-                      </div>
-                      <div className="mt-2 text-[8px] text-archive-amber/30 uppercase tracking-widest font-mono">
-                        Pool: {jumbledLetters.join(' ')}
                       </div>
                     </div>
                   </div>
