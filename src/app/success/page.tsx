@@ -165,14 +165,14 @@ export default function SuccessPage() {
           transition={{ delay: 1.5 }}
           className="flex flex-col md:flex-row items-center justify-center gap-6"
         >
-          <button 
+          <button
             onClick={() => router.push('/leaderboard')}
-            className="glossy-button w-full md:w-auto px-10 py-4 bg-[#3A6EA5] text-[#F5E6D3] font-bold font-sans uppercase tracking-widest text-xs rounded-lg"
+            className="w-full md:w-auto px-10 py-4 bg-[#A67C52] text-[#F5E6D3] font-bold font-sans uppercase tracking-widest text-xs rounded-lg"
           >
             View Rankings
           </button>
-          <button 
-            onClick={() => router.push('/')}
+          <button
+            onClick={() => router.push('/welcome')}
             className="text-[#8D6E63] hover:text-[#3A6EA5] transition-all text-[10px] font-bold uppercase tracking-widest"
           >
             [ Exit Archives ]

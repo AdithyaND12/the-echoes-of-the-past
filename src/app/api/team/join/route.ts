@@ -2,27 +2,22 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Team from '@/models/Team';
 import { signToken } from '@/lib/auth';
+import { nanoid } from 'nanoid';
 
 export async function POST(req: Request) {
   try {
     await dbConnect();
-    const { teamName, teamId } = await req.json();
+    const { teamName } = await req.json();
 
-    if (!teamName || !teamId) {
-      return NextResponse.json({ error: 'Missing team name or ID' }, { status: 400 });
+    if (!teamName) {
+      return NextResponse.json({ error: 'Missing team name' }, { status: 400 });
     }
 
-    // Check if team ID already exists
-    let team = await Team.findOne({ teamId });
-
-    if (team) {
-      // If team exists, just sign them in (allow re-joining if they lost session)
-      const token = signToken({ teamId: team.teamId, name: team.name });
-      return NextResponse.json({ token, teamId: team.teamId, name: team.name });
-    }
+    // Generate a unique teamId
+    const teamId = nanoid(8).toLowerCase();
 
     // Create new team
-    team = await Team.create({
+    const team = await Team.create({
       name: teamName,
       teamId,
       startTime: new Date(),

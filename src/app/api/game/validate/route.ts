@@ -20,9 +20,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 
-    const { answer } = await req.json();
-    if (!answer) {
-      return NextResponse.json({ error: 'Answer is required' }, { status: 400 });
+    const { puzzleId, answer } = await req.json();
+    if (!puzzleId || !answer) {
+      return NextResponse.json({ error: 'Puzzle ID and answer are required' }, { status: 400 });
     }
 
     const team = await Team.findOne({ teamId: decoded.teamId });
@@ -30,48 +30,54 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Team not found' }, { status: 404 });
     }
 
-    const puzzles = await Puzzle.find().sort({ order: 1 });
-    const currentPuzzle = puzzles[team.currentPuzzleIndex];
+    const puzzle = await Puzzle.findById(puzzleId);
 
-    if (!currentPuzzle) {
-      return NextResponse.json({ error: 'No active puzzle' }, { status: 400 });
+    if (!puzzle) {
+      return NextResponse.json({ error: 'Puzzle not found' }, { status: 404 });
+    }
+
+    if (team.solvedPuzzleIds.includes(puzzle._id.toString())) {
+      return NextResponse.json({ error: 'Puzzle already solved' }, { status: 400 });
     }
 
     // Answer normalization
     const normalizedUserAnswer = answer.toLowerCase().trim().replace(/\s+/g, ' ');
-    const isCorrect = currentPuzzle.acceptedAnswers.some((accepted: string) => 
+    const isCorrect = puzzle.acceptedAnswers.some((accepted: string) => 
       accepted.toLowerCase().trim().replace(/\s+/g, ' ') === normalizedUserAnswer
     );
 
     if (isCorrect) {
       // Reward with letter
-      const letter = currentPuzzle.rewardLetter;
+      const letter = puzzle.rewardLetter;
       if (letter && !team.collectedLetters.includes(letter)) {
         team.collectedLetters.push(letter);
       }
 
-      // Advance to next puzzle
-      team.currentPuzzleIndex += 1;
-      team.attempts = 0; // Reset attempts for next puzzle
+      // Mark puzzle as solved
+      team.solvedPuzzleIds.push(puzzle._id.toString());
+      
+      // Check if all puzzles are solved
+      const totalPuzzles = await Puzzle.countDocuments();
+      team.isCompleted = team.solvedPuzzleIds.length >= totalPuzzles;
       
       await team.save();
 
       return NextResponse.json({ 
         correct: true, 
         letter,
-        nextPuzzle: team.currentPuzzleIndex < puzzles.length,
-        isCompleted: false // Never auto-complete from songs now
+        isCompleted: team.isCompleted
       });
     } else {
-      // Increment attempts
+      // Increment attempts - NOTE: We might need a per-puzzle attempts tracker now. 
+      // For now, incrementing overall team attempts is acceptable as a simplistic approach.
       team.attempts += 1;
       await team.save();
 
       return NextResponse.json({ 
         correct: false, 
         attempts: team.attempts,
-        hint1: team.attempts >= 2 ? currentPuzzle.hint1 : null,
-        hint2: team.attempts >= 4 ? currentPuzzle.hint2 : null,
+        hint1: team.attempts >= 2 ? puzzle.hint1 : null,
+        hint2: team.attempts >= 4 ? puzzle.hint2 : null,
       });
     }
   } catch (err) {

@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface ITeam extends Document {
   name: string;
   teamId: string;
-  currentPuzzleIndex: number;
+  solvedPuzzleIds: string[];
   attempts: number;
   startTime: Date;
   endTime?: Date;
@@ -17,7 +17,7 @@ export interface ITeam extends Document {
 const TeamSchema: Schema = new Schema({
   name: { type: String, required: true },
   teamId: { type: String, required: true, unique: true },
-  currentPuzzleIndex: { type: Number, default: 0 },
+  solvedPuzzleIds: { type: [String], default: [] },
   attempts: { type: Number, default: 0 },
   startTime: { type: Date, default: Date.now },
   endTime: { type: Date },

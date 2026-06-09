@@ -343,7 +343,7 @@ export default function AdminDashboard() {
               <form onSubmit={handleSaveSettings} className="space-y-6">
                 <div>
                   <label className="text-[10px] uppercase text-primary/60 block mb-1">Final Word (Target)</label>
-                  <input name="targetWord" defaultValue={settings?.targetWord} required maxLength={6} className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none uppercase font-mono tracking-widest" />
+                  <input name="targetWord" defaultValue={settings?.targetWord} required maxLength={9} className="w-full bg-background border border-primary/20 p-2 text-sm text-primary focus:border-primary outline-none uppercase font-mono tracking-widest" />
                 </div>
                 <div>
                   <label className="text-[10px] uppercase text-primary/60 block mb-1">Master Audio URL (Merged MP3)</label>

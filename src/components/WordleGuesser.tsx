@@ -11,7 +11,7 @@ interface WordleGuesserProps {
 }
 
 export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLetters }: WordleGuesserProps) {
-  const [guess, setGuess] = useState(['', '', '', '', '', '']);
+  const [guess, setGuess] = useState(Array(9).fill(''));
   const [status, setStatus] = useState<{ type: 'none' | 'success' | 'error', message: string }>({ type: 'none', message: '' });
   const [loading, setLoading] = useState(false);
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
@@ -23,7 +23,7 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
     setGuess(newGuess);
 
     // Move to next input
-    if (value && index < 5) {
+    if (value && index < 8) {
       inputs.current[index + 1]?.focus();
     }
   };
@@ -37,7 +37,7 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const finalGuess = guess.join('');
-    if (finalGuess.length < 6) return;
+    if (finalGuess.length < 9) return;
 
     setLoading(true);
     setStatus({ type: 'none', message: '' });
@@ -116,7 +116,7 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-12">
-        <div className="flex justify-between gap-4">
+        <div className="flex justify-between gap-2 flex-wrap">
           {guess.map((char, i) => (
             <input
               key={i}
@@ -126,7 +126,7 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
               value={char}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
-              className="w-full h-20 bg-[#F5F1ED] border-2 border-[#A1887F] rounded-xl text-center text-4xl font-mono font-black text-[#3E2723] focus:outline-none focus:border-[#3A6EA5] focus:bg-white transition-all uppercase shadow-[inset_2px_2px_8px_rgba(0,0,0,0.05)]"
+              className="w-10 h-16 md:w-16 md:h-20 bg-[#F5F1ED] border-2 border-[#A1887F] rounded-xl text-center text-2xl md:text-4xl font-mono font-black text-[#3E2723] focus:outline-none focus:border-[#3A6EA5] focus:bg-white transition-all uppercase shadow-[inset_2px_2px_8px_rgba(0,0,0,0.05)]"
             />
           ))}
         </div>
@@ -135,7 +135,7 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
           <button
             type="submit"
             disabled={loading || guess.join('').length < 6}
-            className="glossy-button w-full max-w-md py-6 bg-[#3A6EA5] text-[#F5E6D3] uppercase tracking-[0.3em] font-black text-sm rounded-2xl shadow-2xl disabled:opacity-50 disabled:grayscale transition-all"
+            className="w-full max-w-md py-6 bg-[#A67C52] text-[#F5E6D3] uppercase tracking-[0.3em] font-black text-sm rounded-2xl shadow-2xl disabled:opacity-50 disabled:grayscale transition-all"
           >
             <span className="flex items-center justify-center gap-3">
               {loading ? 'CALIBRATING_HASH...' : 'EXECUTE OVERRIDE'}

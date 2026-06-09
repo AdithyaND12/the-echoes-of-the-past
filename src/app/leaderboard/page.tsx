@@ -72,7 +72,6 @@ export default function LeaderboardPage() {
                   </div>
                   <div>
                     <div className="font-bold text-archive-white tracking-widest">{team.name}</div>
-                    <div className="text-[10px] text-archive-white/40 font-mono uppercase">{team.teamId}</div>
                   </div>
                 </div>
 
@@ -102,7 +101,7 @@ export default function LeaderboardPage() {
 
       <div className="mt-12 text-center w-full">
         <button 
-          onClick={() => window.location.href = '/'}
+          onClick={() => window.location.href = '/welcome'}
           className="text-archive-white/40 hover:text-archive-white transition-all text-xs font-mono uppercase tracking-[0.3em]"
         >
           &gt; RETURN TO COMMAND CENTER

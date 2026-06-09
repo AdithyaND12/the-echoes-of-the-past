@@ -8,7 +8,6 @@ import { UserPlus, Fingerprint, Shield, ChevronRight } from "lucide-react";
 
 export default function JoinPage() {
   const [teamName, setTeamName] = useState("");
-  const [teamId, setTeamId] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -22,14 +21,16 @@ export default function JoinPage() {
       const res = await fetch("/api/team/join", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teamName, teamId }),
+        body: JSON.stringify({ teamName }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
+        console.log("Team joined successfully, data:", data);
         localStorage.setItem("teamToken", data.token);
         localStorage.setItem("teamId", data.teamId);
+        console.log("Navigating to /play");
         router.push("/play");
       } else {
         setError(data.error || "Failed to register team");
@@ -68,18 +69,6 @@ export default function JoinPage() {
               placeholder="Enter Squad Name..."
             />
           </div>
-          
-          <div className="relative flex flex-col gap-2">
-            <label className="text-[10px] text-[#3A6EA5] uppercase tracking-[0.2em] font-black ml-1 italic">Access Frequency ID</label>
-            <input
-              type="text"
-              required
-              value={teamId}
-              onChange={(e) => setTeamId(e.target.value)}
-              className="w-full bg-[#EFEBE9] border-2 border-[#D7CCC8] rounded px-5 py-4 text-[#3E2723] placeholder:text-[#A1887F]/30 focus:outline-none focus:border-[#3A6EA5] focus:bg-white transition-all duration-300 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)] font-mono font-bold"
-              placeholder="Enter Unique ID..."
-            />
-          </div>
 
           {error && (
             <motion.div 
@@ -95,7 +84,7 @@ export default function JoinPage() {
             <button
               type="submit"
               disabled={loading}
-              className="glossy-button w-full py-5 bg-[#3A6EA5] text-[#F5E6D3] uppercase tracking-[0.3em] font-black rounded-xl transition-all duration-300 disabled:opacity-50 shadow-xl"
+              className="w-full py-5 bg-[#A67C52] text-[#F5E6D3] uppercase tracking-[0.3em] font-black rounded-xl transition-all duration-300 disabled:opacity-50 shadow-xl"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 {loading ? "SYNCHRONIZING..." : "ESTABLISH LINK"}
@@ -104,6 +93,7 @@ export default function JoinPage() {
             </button>
           </div>
         </form>
+
 
         <div className="mt-10 pt-6 border-t border-[#D7CCC8] flex items-center justify-center gap-2 opacity-50">
           <Shield size={14} className="text-[#3A6EA5]" />

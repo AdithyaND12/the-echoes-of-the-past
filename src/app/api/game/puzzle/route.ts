@@ -25,7 +25,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'Team not found' }, { status: 404 });
     }
 
-    // Find the puzzle corresponding to team's current index
+    // Find all puzzles
     const puzzles = await Puzzle.find().sort({ order: 1 });
     
     // Safety check: If there are NO puzzles in the database at all
@@ -36,32 +36,18 @@ export async function GET(req: Request) {
       }, { status: 200 });
     }
 
-    const currentPuzzle = puzzles[team.currentPuzzleIndex];
+    // Map puzzles to include solved status
+    const puzzleStatus = puzzles.map(p => ({
+      ...p.toObject(),
+      isSolved: team.solvedPuzzleIds.includes(p._id.toString())
+    }));
 
-    // Get all reward letters from all puzzles and jumble them
-    const allLetters = puzzles.map(p => p.rewardLetter).filter(l => l && l !== '?');
-    const jumbledLetters = [...allLetters].sort(() => Math.random() - 0.5);
-
-    if (!currentPuzzle) {
-      return NextResponse.json({ 
-        allSongsSolved: true, 
-        message: 'Simulation Calibration Complete',
-        collectedLetters: team.collectedLetters,
-        jumbledLetters: team.collectedLetters
-      });
-    }
-
-    // Return puzzle data WITHOUT the correct answers or the audio URL
+    // Return puzzle list
     return NextResponse.json({
-      puzzle: {
-        hint1: team.attempts >= 2 ? currentPuzzle.hint1 : null,
-        hint2: team.attempts >= 4 ? currentPuzzle.hint2 : null,
-        nodeIndex: team.currentPuzzleIndex + 1,
-        totalNodes: puzzles.length,
-        attempts: team.attempts,
-      },
+      puzzles: puzzleStatus,
+      attempts: team.attempts,
+      totalNodes: puzzles.length,
       collectedLetters: team.collectedLetters,
-      jumbledLetters
     });
   } catch (err: any) {
     console.error('Puzzle fetch error:', err.message);
