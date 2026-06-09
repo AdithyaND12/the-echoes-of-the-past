@@ -21,16 +21,8 @@ export default function PlayPage() {
   const router = useRouter();
 
   const fetchPuzzles = async () => {
-    const token = localStorage.getItem('teamToken');
-    if (!token) {
-      router.push('/join');
-      return;
-    }
-
     try {
-      const res = await fetch('/api/game/puzzle', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const res = await fetch('/api/game/puzzle', { credentials: 'include' });
       const data = await res.json();
 
       if (res.ok) {
@@ -42,7 +34,6 @@ export default function PlayPage() {
           setAttempts(data.attempts || 0);
         }
       } else {
-        localStorage.removeItem('teamToken');
         router.push('/join');
       }
     } catch (err) {
@@ -65,13 +56,12 @@ export default function PlayPage() {
     setStatus({ type: 'none', message: '' });
 
     try {
-      const token = localStorage.getItem('teamToken');
       const res = await fetch('/api/game/validate', {
         method: 'POST',
         headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ puzzleId: activePuzzle._id, answer }),
       });
 

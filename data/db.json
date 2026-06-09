@@ -1,0 +1,127 @@
+{
+  "puzzles": [],
+  "settings": {
+    "googleFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeGtdxtsWq0IC33nvuBUnxrSW7Wp_femr6m0MsitcTSs8qCgw/viewform?usp=publish-editor",
+    "teamIdFieldId": "Team name",
+    "answerFieldId": "Answer to the question"
+  },
+  "teams": [
+    {
+      "name": "a",
+      "teamId": "ou6irthj",
+      "startTime": "2026-06-09T11:34:07.203Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "a",
+      "teamId": "7a9rsxza",
+      "startTime": "2026-06-09T11:34:09.184Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "a",
+      "teamId": "kgmap19m",
+      "startTime": "2026-06-09T11:34:13.804Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "a",
+      "teamId": "ukqhssbo",
+      "startTime": "2026-06-09T11:34:29.567Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "a",
+      "teamId": "v9tsl3jk",
+      "startTime": "2026-06-09T11:35:54.519Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "abc",
+      "teamId": "f3k1chyo",
+      "startTime": "2026-06-09T11:37:32.760Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "abc",
+      "teamId": "lftp3f--",
+      "startTime": "2026-06-09T11:37:44.178Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "abc",
+      "teamId": "rhsntnai",
+      "startTime": "2026-06-09T11:37:53.642Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "abc",
+      "teamId": "g76s8xst",
+      "startTime": "2026-06-09T11:38:01.639Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "abc",
+      "teamId": "2n0asldy",
+      "startTime": "2026-06-09T11:39:21.653Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "ab",
+      "teamId": "c6d9equa",
+      "startTime": "2026-06-09T11:39:27.358Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "a",
+      "teamId": "ksmsxbkb",
+      "startTime": "2026-06-09T11:41:22.920Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    },
+    {
+      "name": "a",
+      "teamId": "zeplcwpj",
+      "startTime": "2026-06-09T11:41:26.418Z",
+      "solvedPuzzleIds": [],
+      "attempts": 0,
+      "collectedLetters": [],
+      "isCompleted": false
+    }
+  ]
+}

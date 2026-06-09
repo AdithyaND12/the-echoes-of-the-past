@@ -27,10 +27,6 @@ export default function JoinPage() {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Team joined successfully, data:", data);
-        localStorage.setItem("teamToken", data.token);
-        localStorage.setItem("teamId", data.teamId);
-        console.log("Navigating to /play");
         router.push("/play");
       } else {
         setError(data.error || "Failed to register team");

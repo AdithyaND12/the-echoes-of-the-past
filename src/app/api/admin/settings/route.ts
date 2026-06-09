@@ -1,48 +1,14 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongodb';
-import Settings from '@/models/Settings';
-import { verifyToken } from '@/lib/auth';
+import { readData, writeData } from '@/lib/fileStore';
 
-function isAdmin(req: Request) {
-  const authHeader = req.headers.get('authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) return false;
-  const token = authHeader.split(' ')[1];
-  const decoded: any = verifyToken(token);
-  return decoded && decoded.role === 'admin';
-}
-
-export async function GET(req: Request) {
-  if (!isAdmin(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  
-  await dbConnect();
-  let settings = await Settings.findOne();
-  if (!settings) {
-    settings = await Settings.create({ 
-      adminPasswordHash: 'temp',
-      targetWord: 'MEMORY',
-      masterAudioUrl: ''
-    });
-  }
+export async function GET() {
+  const { settings } = await readData();
   return NextResponse.json(settings);
 }
 
 export async function POST(req: Request) {
-  if (!isAdmin(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  
-  try {
-    await dbConnect();
-    const data = await req.json();
-
-    let settings = await Settings.findOne();
-    if (settings) {
-      settings = await Settings.findByIdAndUpdate(settings._id, data, { new: true });
-    } else {
-      settings = await Settings.create(data);
-    }
-
-    return NextResponse.json(settings);
-  } catch (err: any) {
-    console.error('Error saving settings:', err);
-    return NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 });
-  }
+  const settings = await req.json();
+  const data = await readData();
+  await writeData({ ...data, settings });
+  return NextResponse.json({ success: true });
 }
