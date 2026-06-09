@@ -27,7 +27,12 @@ export async function POST(req: Request) {
     await writeData(data);
 
     const response = NextResponse.json({ teamId: newTeam.teamId, name: newTeam.name });
-    response.cookies.set('teamId', newTeam.teamId, { httpOnly: true, secure: true });
+    response.cookies.set('teamId', newTeam.teamId, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      path: '/'
+    });
     return response;
   } catch (err: any) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

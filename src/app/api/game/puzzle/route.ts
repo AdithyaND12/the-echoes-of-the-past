@@ -24,5 +24,6 @@ export async function GET(req: NextRequest) {
     puzzles: puzzleStatus,
     attempts: team.attempts || 0,
     collectedLetters: team.collectedLetters || [],
+    teamName: team.name,
   });
 }

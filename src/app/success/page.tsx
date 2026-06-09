@@ -14,15 +14,9 @@ export default function SuccessPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem('teamToken');
-      if (!token) {
-        router.push('/join');
-        return;
-      }
-
       try {
         const res = await fetch('/api/game/complete', {
-          headers: { 'Authorization': `Bearer ${token}` }
+          credentials: 'include'
         });
         const result = await res.json();
 
@@ -30,7 +24,7 @@ export default function SuccessPage() {
           setData(result);
         } else {
           setError(result.error || 'Failed to retrieve archive data');
-          setTimeout(() => router.push('/play'), 2000);
+          setTimeout(() => router.push('/join'), 2000);
         }
       } catch (err) {
         console.error(err);

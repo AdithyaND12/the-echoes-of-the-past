@@ -1,127 +1,175 @@
 {
-  "puzzles": [],
+  "puzzles": [
+    {
+      "_id": "puzzle_1",
+      "name": "Segment 1 - Duolingo",
+      "hint1": "Green bird that teaches languages",
+      "acceptedAnswers": [
+        "duolingo",
+        "duo"
+      ],
+      "rewardLetter": "R",
+      "audioUrl": "/duolingo.mp3"
+    },
+    {
+      "_id": "puzzle_2",
+      "name": "Segment 2 - Discord",
+      "hint1": "Gamers' favorite chat platform chime (User Join)",
+      "acceptedAnswers": [
+        "discord",
+        "discord join",
+        "discord call",
+        "discord user join"
+      ],
+      "rewardLetter": "E",
+      "audioUrl": "/discord.mp3"
+    },
+    {
+      "_id": "puzzle_3",
+      "name": "Segment 3 - Paytm",
+      "hint1": "Payment chime at Indian shops",
+      "acceptedAnswers": [
+        "paytm",
+        "paytm sound",
+        "paytm notification"
+      ],
+      "rewardLetter": "M",
+      "audioUrl": "/paytm.mp3"
+    },
+    {
+      "_id": "puzzle_4",
+      "name": "Segment 4 - Netflix",
+      "hint1": "Tudum sound from video streaming",
+      "acceptedAnswers": [
+        "netflix",
+        "netflix intro",
+        "netflix sound",
+        "netflix tudum",
+        "tudum"
+      ],
+      "rewardLetter": "I",
+      "audioUrl": "/netflix.mp3"
+    },
+    {
+      "_id": "puzzle_5",
+      "name": "Segment 5 - Valorant",
+      "hint1": "Queue pop sound from Riot Games shooter",
+      "acceptedAnswers": [
+        "valorant",
+        "valorant sound",
+        "valorant queue",
+        "valorant match found"
+      ],
+      "rewardLetter": "N",
+      "audioUrl": "/valorant.mp3"
+    },
+    {
+      "_id": "puzzle_6",
+      "name": "Segment 6 - iPhone Radar",
+      "hint1": "Default morning alarm sound on Apple devices",
+      "acceptedAnswers": [
+        "iphone radar",
+        "iphone alarm",
+        "iphone",
+        "radar",
+        "apple radar"
+      ],
+      "rewardLetter": "I",
+      "audioUrl": "/iphone.mp3"
+    },
+    {
+      "_id": "puzzle_7",
+      "name": "Segment 7 - Among Us",
+      "hint1": "Imposter game round start sound",
+      "acceptedAnswers": [
+        "among us",
+        "among us start",
+        "imposter",
+        "amongus"
+      ],
+      "rewardLetter": "S",
+      "audioUrl": "/amongus.mp3"
+    },
+    {
+      "_id": "puzzle_8",
+      "name": "Segment 8 - Intel",
+      "hint1": "Logo sound from processor manufacturer",
+      "acceptedAnswers": [
+        "intel",
+        "intel inside",
+        "intel chime",
+        "eh sorry",
+        "sorry"
+      ],
+      "rewardLetter": "C",
+      "audioUrl": "/intel.mp3"
+    },
+    {
+      "_id": "puzzle_9",
+      "name": "Segment 9 - Miffy Cafe",
+      "hint1": "Cute lofi café vibes from NCS (hint: miffy)",
+      "acceptedAnswers": [
+        "miffy",
+        "miffy cafe",
+        "sakuracloud - miffy cafe",
+        "sakuracloud"
+      ],
+      "rewardLetter": "E",
+      "audioUrl": "/miffy.mp3"
+    }
+  ],
   "settings": {
     "googleFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeGtdxtsWq0IC33nvuBUnxrSW7Wp_femr6m0MsitcTSs8qCgw/viewform?usp=publish-editor",
-    "teamIdFieldId": "Team name",
-    "answerFieldId": "Answer to the question"
+    "teamIdFieldId": "1210080097",
+    "answerFieldId": "1285742345",
+    "targetWord": "REMINISCE"
   },
   "teams": [
     {
-      "name": "a",
-      "teamId": "ou6irthj",
-      "startTime": "2026-06-09T11:34:07.203Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
+      "name": "ValidationTestTeam",
+      "teamId": "g4oppuwu",
+      "startTime": "2026-06-09T12:25:36.444Z",
+      "solvedPuzzleIds": [
+        "puzzle_1"
+      ],
+      "attempts": 1,
+      "collectedLetters": [
+        "R"
+      ],
       "isCompleted": false
     },
     {
-      "name": "a",
-      "teamId": "7a9rsxza",
-      "startTime": "2026-06-09T11:34:09.184Z",
+      "name": "abc",
+      "teamId": "afq2pxjl",
+      "startTime": "2026-06-09T12:26:26.163Z",
       "solvedPuzzleIds": [],
-      "attempts": 0,
+      "attempts": 1,
       "collectedLetters": [],
-      "isCompleted": false
+      "isCompleted": true,
+      "endTime": "2026-06-09T12:27:47.804Z"
     },
     {
-      "name": "a",
-      "teamId": "kgmap19m",
-      "startTime": "2026-06-09T11:34:13.804Z",
+      "name": "m",
+      "teamId": "emeo6bs8",
+      "startTime": "2026-06-09T12:29:14.936Z",
       "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "a",
-      "teamId": "ukqhssbo",
-      "startTime": "2026-06-09T11:34:29.567Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "a",
-      "teamId": "v9tsl3jk",
-      "startTime": "2026-06-09T11:35:54.519Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
+      "attempts": 1,
       "collectedLetters": [],
       "isCompleted": false
     },
     {
       "name": "abc",
-      "teamId": "f3k1chyo",
-      "startTime": "2026-06-09T11:37:32.760Z",
-      "solvedPuzzleIds": [],
+      "teamId": "bvgmpuwk",
+      "startTime": "2026-06-09T13:10:38.438Z",
+      "solvedPuzzleIds": [
+        "puzzle_1"
+      ],
       "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "abc",
-      "teamId": "lftp3f--",
-      "startTime": "2026-06-09T11:37:44.178Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "abc",
-      "teamId": "rhsntnai",
-      "startTime": "2026-06-09T11:37:53.642Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "abc",
-      "teamId": "g76s8xst",
-      "startTime": "2026-06-09T11:38:01.639Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "abc",
-      "teamId": "2n0asldy",
-      "startTime": "2026-06-09T11:39:21.653Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "ab",
-      "teamId": "c6d9equa",
-      "startTime": "2026-06-09T11:39:27.358Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "a",
-      "teamId": "ksmsxbkb",
-      "startTime": "2026-06-09T11:41:22.920Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
-    },
-    {
-      "name": "a",
-      "teamId": "zeplcwpj",
-      "startTime": "2026-06-09T11:41:26.418Z",
-      "solvedPuzzleIds": [],
-      "attempts": 0,
-      "collectedLetters": [],
-      "isCompleted": false
+      "collectedLetters": [
+        "R"
+      ],
+      "isCompleted": true,
+      "endTime": "2026-06-09T13:10:56.804Z"
     }
   ]
 }

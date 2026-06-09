@@ -43,13 +43,12 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
     setStatus({ type: 'none', message: '' });
 
     try {
-      const token = localStorage.getItem('teamToken');
       const res = await fetch('/api/game/wordle', {
         method: 'POST',
         headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ guess: finalGuess }),
       });
 

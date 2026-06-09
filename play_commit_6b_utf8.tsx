@@ -1,11 +1,10 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Terminal from '@/components/Terminal';
 import WordleGuesser from '@/components/WordleGuesser';
-import AudioPlayer from '@/components/AudioPlayer';
 import { CheckCircle, XCircle, Key, Headphones, Database, ChevronRight } from 'lucide-react';
 
 export default function PlayPage() {
@@ -19,13 +18,18 @@ export default function PlayPage() {
   const [status, setStatus] = useState<{ type: 'success' | 'error' | 'none', message: string }>({ type: 'none', message: '' });
   const [collectedLetters, setCollectedLetters] = useState<string[]>([]);
   const [showWordle, setShowWordle] = useState(false);
-  const [teamName, setTeamName] = useState('');
   const router = useRouter();
 
   const fetchPuzzles = async () => {
+    const token = localStorage.getItem('teamToken');
+    if (!token) {
+      router.push('/join');
+      return;
+    }
+
     try {
-      const res = await fetch('/api/game/puzzle', { 
-        credentials: 'include' 
+      const res = await fetch('/api/game/puzzle', {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
 
@@ -36,9 +40,9 @@ export default function PlayPage() {
           setPuzzles(data.puzzles || []);
           setCollectedLetters(data.collectedLetters || []);
           setAttempts(data.attempts || 0);
-          setTeamName(data.teamName || '');
         }
       } else {
+        localStorage.removeItem('teamToken');
         router.push('/join');
       }
     } catch (err) {
@@ -61,12 +65,13 @@ export default function PlayPage() {
     setStatus({ type: 'none', message: '' });
 
     try {
+      const token = localStorage.getItem('teamToken');
       const res = await fetch('/api/game/validate', {
         method: 'POST',
         headers: { 
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
-        credentials: 'include',
         body: JSON.stringify({ puzzleId: activePuzzle._id, answer }),
       });
 
@@ -218,13 +223,6 @@ export default function PlayPage() {
                         </div>
                       </div>
 
-                      {/* Audio Player */}
-                      {activePuzzle.audioUrl && (
-                        <div className="mb-8">
-                          <AudioPlayer src={activePuzzle.audioUrl} />
-                        </div>
-                      )}
-
                       {/* Core Interaction */}
                       <div className="space-y-12">
                         <form onSubmit={handleSubmit} className="space-y-10">
@@ -308,10 +306,8 @@ export default function PlayPage() {
       </div>
       
       <div className="mt-16 mb-20 text-[10px] text-[#8D6E63] font-black font-mono flex flex-wrap justify-center gap-10 md:gap-20 uppercase tracking-[0.3em] relative z-10 bg-white/40 px-10 py-3 rounded-full backdrop-blur-md border-2 border-[#D7CCC8] shadow-xl italic">
-        {teamName && <span>Squad: {teamName}</span>}
-        <span>Calibration: {collectedLetters.length} / {puzzles.length} Fragments</span>
-        <span>Attempts: {attempts}</span>
       </div>
     </div>
   );
 }
+

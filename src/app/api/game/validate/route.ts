@@ -22,8 +22,10 @@ export async function POST(req: NextRequest) {
     accepted.toLowerCase().trim().replace(/\s+/g, ' ') === normalizedUserAnswer
   );
 
+
+
   if (isCorrect) {
-    if (puzzle.rewardLetter && !team.collectedLetters.includes(puzzle.rewardLetter)) {
+    if (puzzle.rewardLetter) {
       team.collectedLetters.push(puzzle.rewardLetter);
     }
     team.solvedPuzzleIds = [...(team.solvedPuzzleIds || []), puzzle._id];
