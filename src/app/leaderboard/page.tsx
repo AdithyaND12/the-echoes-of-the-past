@@ -101,7 +101,7 @@ export default function LeaderboardPage() {
 
       <div className="mt-12 text-center w-full">
         <button 
-          onClick={() => window.location.href = '/welcome'}
+          onClick={() => window.location.href = '/join'}
           className="text-archive-white/40 hover:text-archive-white transition-all text-xs font-mono uppercase tracking-[0.3em]"
         >
           &gt; RETURN TO COMMAND CENTER

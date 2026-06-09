@@ -53,6 +53,7 @@ export default function PlayPage() {
   };
 
   useEffect(() => {
+    console.log("PlayPage loaded. Puzzles:", puzzles, "ActivePuzzle:", activePuzzle, "NoPuzzles:", noPuzzles);
     fetchPuzzles();
   }, []);
 
@@ -123,7 +124,7 @@ export default function PlayPage() {
               Please contact the archivist to add audio fragments to the collection.
             </p>
             <button
-              onClick={() => router.push('/welcome')}
+              onClick={() => router.push('/join')}
               className="px-8 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all text-xs font-bold uppercase tracking-widest shadow-md"
             >
               Return Home
@@ -209,15 +210,12 @@ export default function PlayPage() {
                           &lt; BACK TO ARCHIVE
                         </button>
                         <div className="flex items-center gap-5">
-                          <div className="w-12 h-12 bg-[#3A6EA5] rounded-xl flex items-center justify-center shadow-xl border-2 border-[#F5E6D3]/30">
-                            <Database className="text-[#F5E6D3]" size={24} />
-                          </div>
                           <div>
                             <div className="text-2xl font-black font-sans text-[#3E2723] italic tracking-tight">
                               {activePuzzle.name}
                             </div>
                             <div className="text-xs font-mono text-[#5D4037] mt-2">
-                              Question: {activePuzzle.hint1}
+                              {activePuzzle.hint1}
                             </div>
                           </div>
                         </div>

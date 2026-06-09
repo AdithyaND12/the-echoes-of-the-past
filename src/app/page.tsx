@@ -10,7 +10,7 @@ export default function LandingPage() {
         TV touch point area.
         To refine positioning: Temporarily add 'border-2 border-red-500' to motion.div class.
       */}
-      <Link href="/welcome" className="absolute inset-0 z-50">
+      <Link href="/join" className="absolute inset-0 z-50">
         <motion.div 
           className="w-full h-full cursor-pointer transition-all"
           whileTap={{ scale: 0.98 }}

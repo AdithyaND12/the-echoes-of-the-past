@@ -39,7 +39,7 @@ export async function GET(req: Request) {
     // Map puzzles to include solved status
     const puzzleStatus = puzzles.map(p => ({
       ...p.toObject(),
-      isSolved: team.solvedPuzzleIds.includes(p._id.toString())
+      isSolved: (team.solvedPuzzleIds || []).includes(p._id.toString())
     }));
 
     // Return puzzle list

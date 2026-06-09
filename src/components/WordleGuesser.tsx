@@ -80,42 +80,33 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
           <Key className="text-[#F5E6D3] animate-pulse" size={24} />
         </div>
         <div>
-          <h3 className="text-[#3A6EA5] text-[10px] uppercase tracking-[0.3em] font-black italic">INPUT_STREAM</h3>
           <div className="text-2xl font-black font-sans text-[#3E2723] italic tracking-tighter uppercase">GUESS THE WORD</div>
         </div>
       </div>
 
-      <div className="mb-12 bg-[#EFEBE9]/60 border-2 border-[#D7CCC8] p-8 shadow-inner relative overflow-hidden rounded-xl">
-        <div className="absolute top-2 right-4 opacity-20 font-bold text-[8px] font-mono tracking-widest uppercase">Encryption_Pool_Active</div>
-        <div className="text-[10px] text-[#3A6EA5] uppercase tracking-[0.3em] mb-6 font-black italic border-b border-[#D7CCC8]/50 pb-2 flex items-center gap-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#8CFF8C] shadow-[0_0_8px_#8CFF8C]" /> Recovered_Fragments:
-        </div>
-        <div className="flex flex-wrap gap-4">
-          {collectedLetters.map((l, i) => (
-            <motion.div
-              key={i}
-              initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
-              animate={{ scale: 1, opacity: 1, rotate: 0 }}
-              className="w-12 h-14 border-2 border-[#3A6EA5] bg-[#3A6EA5]/10 flex items-center justify-center font-mono font-black rounded-lg text-2xl text-[#3A6EA5] shadow-[inset_0_2px_10px_rgba(58,110,165,0.1),0_4px_10px_rgba(0,0,0,0.1)]"
-            >
-              {l}
-            </motion.div>
-          ))}
-          {collectedLetters.length === 0 && (
-            <div className="text-[10px] font-mono text-[#8D6E63] italic uppercase tracking-widest py-2">No fragments recovered yet.</div>
-          )}
-        </div>
-        <div className="mt-8 space-y-2">
-          <p className="text-[10px] text-[#4E342E] italic font-bold leading-relaxed opacity-70">
-            &gt; Unscramble the recovered fragments to bypass central security protocols.
-          </p>
-          <p className="text-[10px] text-[#4E342E] italic font-bold leading-relaxed opacity-70">
-            &gt; All data streams must be aligned for final archive restoration.
-          </p>
-        </div>
-      </div>
-
       <form onSubmit={handleSubmit} className="space-y-12">
+        <div className="mb-12 bg-[#EFEBE9]/60 border-2 border-[#D7CCC8] p-8 shadow-inner relative overflow-hidden rounded-xl">
+          <div className="absolute top-2 right-4 opacity-20 font-bold text-[8px] font-mono tracking-widest uppercase">Encryption_Pool_Active</div>
+          <div className="text-[10px] text-[#3A6EA5] uppercase tracking-[0.3em] mb-6 font-black italic border-b border-[#D7CCC8]/50 pb-2 flex items-center gap-3">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#8CFF8C] shadow-[0_0_8px_#8CFF8C]" /> Recovered_Fragments:
+          </div>
+          <div className="flex flex-wrap gap-4">
+            {collectedLetters.map((l, i) => (
+              <motion.div
+                key={i}
+                initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                className="w-12 h-14 border-2 border-[#3A6EA5] bg-[#3A6EA5]/10 flex items-center justify-center font-mono font-black rounded-lg text-2xl text-[#3A6EA5] shadow-[inset_0_2px_10px_rgba(58,110,165,0.1),0_4px_10px_rgba(0,0,0,0.1)]"
+              >
+                {l}
+              </motion.div>
+            ))}
+            {collectedLetters.length === 0 && (
+              <div className="text-[10px] font-mono text-[#8D6E63] italic uppercase tracking-widest py-2">No fragments recovered yet.</div>
+            )}
+          </div>
+        </div>
+
         <div className="flex justify-between gap-2 flex-wrap">
           {guess.map((char, i) => (
             <input
@@ -134,7 +125,7 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
         <div className="flex flex-col items-center gap-6">
           <button
             type="submit"
-            disabled={loading || guess.join('').length < 6}
+            disabled={loading || guess.join('').length < 9}
             className="w-full max-w-md py-6 bg-[#A67C52] text-[#F5E6D3] uppercase tracking-[0.3em] font-black text-sm rounded-2xl shadow-2xl disabled:opacity-50 disabled:grayscale transition-all"
           >
             <span className="flex items-center justify-center gap-3">
@@ -142,11 +133,6 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
               {!loading && <ChevronRight size={18} />}
             </span>
           </button>
-          
-          <div className="text-[9px] font-mono text-[#8D6E63] uppercase tracking-[0.3em] font-black flex items-center gap-3 italic">
-            <div className="w-2 h-2 rounded-full bg-[#3A6EA5] animate-pulse" />
-            Bypassing Memory_Security_Protocol_v8.4.1
-          </div>
         </div>
       </form>
 

@@ -102,77 +102,19 @@ export default function SuccessPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-3xl md:text-5xl font-bold mb-3 uppercase tracking-tight text-[#3E2723] font-sans"
+          className="text-2xl md:text-3xl font-black mb-12 uppercase tracking-tighter text-[#3E2723] font-sans italic"
         >
-          Restoration Complete
+          MEMORY RESTORED SUCCESSFULLY, NOW MOVING ON TO THE NEXT MEMORY
         </motion.h1>
-        
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-[#8D6E63] font-mono text-[11px] mb-12 italic border-y-2 border-[#D7CCC8] py-3 inline-block px-8 mx-auto uppercase tracking-widest"
-        >
-          &quot;The past is no longer silent. Every echo has found its home.&quot;
-        </motion.p>
-
-        <div className="grid grid-cols-2 gap-6 mb-12">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
-            className="p-5 bg-[#F5F1ED] border-2 border-[#D7CCC8] shadow-inner rounded text-left relative overflow-hidden"
-          >
-            <div className="flex items-center gap-2 text-[#3A6EA5] text-[10px] uppercase tracking-widest font-bold mb-2">
-              <Clock size={12} /> Sync Duration
-            </div>
-            <div className="text-2xl font-bold text-[#3E2723] font-mono">{formatTime(data?.timeTaken)}</div>
-            <div className="absolute -bottom-2 -right-2 opacity-5"><History size={60} className="text-[#3E2723]" /></div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}
-            className="p-5 bg-[#F5F1ED] border-2 border-[#D7CCC8] shadow-inner rounded text-left relative overflow-hidden"
-          >
-            <div className="flex items-center gap-2 text-[#3A6EA5] text-[10px] uppercase tracking-widest font-bold mb-2">
-              <Trophy size={12} /> Archive Status
-            </div>
-            <div className="text-2xl font-bold text-[#2E7D32] uppercase italic">Restored</div>
-            <div className="absolute -bottom-2 -right-2 opacity-5"><ScrollText size={60} className="text-[#3E2723]" /></div>
-          </motion.div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-          className="p-8 border-2 border-dashed border-[#A1887F] bg-[#F5F1ED] relative overflow-hidden group mb-12 rounded"
-        >
-          <div className="text-[10px] uppercase tracking-widest font-bold text-[#8D6E63] mb-4">Unique Completion Hash</div>
-          <div className="text-3xl md:text-4xl font-mono font-bold tracking-widest text-[#3A6EA5] select-all drop-shadow-sm">
-            {data?.completionCode || 'N/A'}
-          </div>
-          <div className="absolute top-2 right-2 opacity-10">
-            <ScrollText size={24} className="text-[#3E2723]" />
-          </div>
-        </motion.div>
 
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
+          transition={{ delay: 1 }}
           className="flex flex-col md:flex-row items-center justify-center gap-6"
         >
           <button
-            onClick={() => router.push('/leaderboard')}
-            className="w-full md:w-auto px-10 py-4 bg-[#A67C52] text-[#F5E6D3] font-bold font-sans uppercase tracking-widest text-xs rounded-lg"
-          >
-            View Rankings
-          </button>
-          <button
-            onClick={() => router.push('/welcome')}
+            onClick={() => router.push('/join')}
             className="text-[#8D6E63] hover:text-[#3A6EA5] transition-all text-[10px] font-bold uppercase tracking-widest"
           >
             [ Exit Archives ]

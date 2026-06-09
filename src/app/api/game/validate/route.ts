@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Puzzle not found' }, { status: 404 });
     }
 
-    if (team.solvedPuzzleIds.includes(puzzle._id.toString())) {
+    if ((team.solvedPuzzleIds || []).includes(puzzle._id.toString())) {
       return NextResponse.json({ error: 'Puzzle already solved' }, { status: 400 });
     }
 
@@ -54,6 +54,7 @@ export async function POST(req: Request) {
       }
 
       // Mark puzzle as solved
+      team.solvedPuzzleIds = team.solvedPuzzleIds || [];
       team.solvedPuzzleIds.push(puzzle._id.toString());
       
       // Check if all puzzles are solved
