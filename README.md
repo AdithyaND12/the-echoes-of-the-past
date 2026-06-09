@@ -42,6 +42,15 @@ npm install
 npm run dev
 ```
 
+### 5. Local Network Access (Run on other laptops)
+To access the webpage from another device on the same Wi-Fi:
+1.  Run the network-enabled server:
+    ```bash
+    npm run dev:network
+    ```
+2.  Find your laptop's **IP Address** (e.g., `192.168.1.50`).
+3.  On the other laptop, open a browser and go to `http://YOUR_IP:3000`.
+
 ## Admin Access
 - URL: `/admin/login`
 - Use the `ADMIN_PASSWORD` defined in your environment variables (default fallback is `admin123`).
