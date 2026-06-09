@@ -80,8 +80,8 @@ export default function WordleGuesser({ onSuccess, collectedLetters, jumbledLett
           <Key className="text-[#F5E6D3] animate-pulse" size={24} />
         </div>
         <div>
-          <h3 className="text-[#3A6EA5] text-[10px] uppercase tracking-[0.3em] font-black italic">Security_Bypass</h3>
-          <div className="text-2xl font-black font-sans text-[#3E2723] italic tracking-tighter uppercase">Master_Override.SYS</div>
+          <h3 className="text-[#3A6EA5] text-[10px] uppercase tracking-[0.3em] font-black italic">INPUT_STREAM</h3>
+          <div className="text-2xl font-black font-sans text-[#3E2723] italic tracking-tighter uppercase">GUESS THE WORD</div>
         </div>
       </div>
 

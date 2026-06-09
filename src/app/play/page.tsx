@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Terminal from '@/components/Terminal';
 import WordleGuesser from '@/components/WordleGuesser';
-import AudioPlayer from '@/components/AudioPlayer';
 import { CheckCircle, XCircle, Key, Headphones, Database, ChevronRight } from 'lucide-react';
 
 export default function PlayPage() {
@@ -163,7 +162,7 @@ export default function PlayPage() {
             }`}
           >
             <div className="flex items-center gap-2">
-              <Key size={14} strokeWidth={3} /> MASTER_OVERRIDE
+              <Key size={14} strokeWidth={3} /> GUESS THE WORD
             </div>
           </button>
         </div>
@@ -214,26 +213,22 @@ export default function PlayPage() {
                             <Database className="text-[#F5E6D3]" size={24} />
                           </div>
                           <div>
-                            <h3 className="text-[#3A6EA5] text-[10px] uppercase tracking-[0.3em] font-black italic">RECOVERY_SESSION</h3>
                             <div className="text-2xl font-black font-sans text-[#3E2723] italic tracking-tight">
-                              FRAGMENT_0{activePuzzle.order}.WAV
+                              {activePuzzle.name}
+                            </div>
+                            <div className="text-xs font-mono text-[#5D4037] mt-2">
+                              Question: {activePuzzle.hint1}
                             </div>
                           </div>
                         </div>
                         <div className="text-right hidden md:block opacity-60">
-                          <div className="text-[10px] font-mono text-[#5D4037] uppercase font-bold">Bitrate: 128kbps</div>
-                          <div className="text-[10px] font-mono text-[#5D4037] uppercase font-bold">Source: 2007_MEDIA</div>
                         </div>
                       </div>
 
                       {/* Core Interaction */}
                       <div className="space-y-12">
-                        <AudioPlayer src={activePuzzle.audioUrl} />
                         <form onSubmit={handleSubmit} className="space-y-10">
                           <div className="relative bg-[#EFEBE9]/60 p-8 border-2 border-[#D7CCC8] shadow-inner rounded-xl">
-                            <label className="block text-[11px] uppercase tracking-[0.3em] font-black mb-6 text-[#3A6EA5] italic">
-                              &gt; Input Recovery Sequence:
-                            </label>
                             <input
                               type="text"
                               autoFocus
@@ -241,7 +236,6 @@ export default function PlayPage() {
                               onChange={(e) => setAnswer(e.target.value)}
                               disabled={submitting || status.type === 'success'}
                               className="w-full bg-[#F5F1ED] border-2 border-[#A1887F] p-5 text-3xl text-[#3E2723] focus:outline-none focus:border-[#3A6EA5] focus:bg-white transition-all font-mono font-bold placeholder:text-[#D7CCC8]/50 shadow-[inset_2px_2px_10px_rgba(0,0,0,0.05)] rounded-lg"
-                              placeholder="Waiting for input..."
                             />
                             
                             <AnimatePresence>
@@ -311,51 +305,9 @@ export default function PlayPage() {
             />
           )}
         </motion.div>
-
-        {/* Hints - Aged Post-it Notes Style */}
-        {!showWordle && activePuzzle && (
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, rotate: -5 }}
-              animate={{ opacity: 1, rotate: -2 }}
-              className={`p-6 bg-[#FFFFE1] border-2 border-[#E6DB55] shadow-xl transition-all duration-1000 relative overflow-hidden ${
-                activePuzzle.hint1 ? 'opacity-100' : 'opacity-40 blur-[2px]'
-              }`}
-            >
-              <div className="absolute top-0 left-0 right-0 h-4 bg-[#E6DB55]/30" />
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] mb-4 text-[#8B8000] border-b border-[#E6DB55]/50 pb-2 italic flex items-center gap-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#E6DB55] shadow-sm" /> Observation_Log_01
-              </div>
-              <div className="font-mono text-xs text-[#5D4037] leading-relaxed font-bold italic">
-                {activePuzzle.hint1 ? `"${activePuzzle.hint1}"` : "Decrypting primary signal..."}
-              </div>
-              <div className="absolute bottom-2 right-2 opacity-10 text-[8px] font-mono font-black uppercase">Frag_0{activePuzzle.order}</div>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, rotate: 5 }}
-              animate={{ opacity: 1, rotate: 2 }}
-              transition={{ delay: 0.2 }}
-              className={`p-6 bg-[#FFFFE1] border-2 border-[#E6DB55] shadow-xl transition-all duration-1000 relative overflow-hidden ${
-                activePuzzle.hint2 ? 'opacity-100' : 'opacity-40 blur-[2px]'
-              }`}
-            >
-              <div className="absolute top-0 left-0 right-0 h-4 bg-[#E6DB55]/30" />
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] mb-4 text-[#8B8000] border-b border-[#E6DB55]/50 pb-2 italic flex items-center gap-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#E6DB55] shadow-sm" /> Observation_Log_02
-              </div>
-              <div className="font-mono text-xs text-[#5D4037] leading-relaxed font-bold italic">
-                {activePuzzle.hint2 ? `"${activePuzzle.hint2}"` : "Awaiting secondary calibration..."}
-              </div>
-              <div className="absolute bottom-2 right-2 opacity-10 text-[8px] font-mono font-black uppercase">Frag_0{activePuzzle.order}</div>
-            </motion.div>
-          </div>
-        )}
       </div>
       
       <div className="mt-16 mb-20 text-[10px] text-[#8D6E63] font-black font-mono flex flex-wrap justify-center gap-10 md:gap-20 uppercase tracking-[0.3em] relative z-10 bg-white/40 px-10 py-3 rounded-full backdrop-blur-md border-2 border-[#D7CCC8] shadow-xl italic">
-        <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#C62828]" /> ATTEMPTS: <span className="text-[#C62828]">{attempts}</span></span>
-        <span className="hidden md:flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-600" /> OS: WIN_XP_PRO</span>
       </div>
     </div>
   );
