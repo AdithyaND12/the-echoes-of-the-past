@@ -1,85 +1,88 @@
 'use client';
 
 import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadSlim } from "tsparticles-slim";
-import type { Engine } from "tsparticles-engine";
+import Particles, { ParticlesProvider } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+import type { Engine } from "@tsparticles/engine";
 
 export default function ParticleBackground() {
-  const particlesInit = useCallback(async (engine: Engine) => {
+  const init = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
 
   return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={{
-        background: {
-          color: {
-            value: "transparent",
-          },
-        },
-        fpsLimit: 60,
-        interactivity: {
-          events: {
-            onHover: {
-              enable: true,
-              mode: "grab",
+    <ParticlesProvider init={init}>
+      <Particles
+        id="tsparticles"
+        options={{
+          background: {
+            color: {
+              value: "transparent",
             },
           },
-          modes: {
-            grab: {
-              distance: 140,
-              links: {
-                opacity: 0.5,
+          fpsLimit: 60,
+          interactivity: {
+            events: {
+              onHover: {
+                enable: true,
+                mode: "grab",
+              },
+            },
+            modes: {
+              grab: {
+                distance: 140,
+                links: {
+                  opacity: 0.5,
+                },
               },
             },
           },
-        },
-        particles: {
-          color: {
-            value: ["#D4A870", "#8D6E63", "#3A6EA5"],
-          },
-          links: {
-            enable: false,
-          },
-          move: {
-            direction: "none",
-            enable: true,
-            outModes: {
-              default: "out",
+          particles: {
+            color: {
+              value: ["#D4A870", "#8D6E63", "#3A6EA5"],
             },
-            random: true,
-            speed: 0.15,
-            straight: false,
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 800,
+            links: {
+              enable: false,
             },
-            value: 60,
-          },
-          opacity: {
-            value: { min: 0.05, max: 0.2 },
-            animation: {
+            move: {
+              direction: "none",
               enable: true,
-              speed: 0.3,
-              minimumValue: 0.05,
-              sync: false,
-            }
+              outModes: {
+                default: "out",
+              },
+              random: true,
+              speed: 0.15,
+              straight: false,
+            },
+            number: {
+              density: {
+                enable: true,
+                width: 1920,
+                height: 1080,
+              },
+              value: 60,
+            },
+            opacity: {
+              value: { min: 0.05, max: 0.2 },
+              animation: {
+                enable: true,
+                speed: 0.3,
+                minimumValue: 0.05,
+                sync: false,
+              }
+            },
+            shape: {
+              type: "circle",
+            },
+            size: {
+              value: { min: 0.5, max: 1.2 },
+            },
           },
-          shape: {
-            type: "circle",
-          },
-          size: {
-            value: { min: 0.5, max: 1.2 },
-          },
-        },
-        detectRetina: true,
-      }}
-      className="fixed inset-0 -z-10"
-    />
+          detectRetina: true,
+        }}
+        className="fixed inset-0 -z-10"
+      />
+    </ParticlesProvider>
   );
 }
+
