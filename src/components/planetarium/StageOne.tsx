@@ -46,7 +46,7 @@ export default function StageOne() {
         feedback === 'error' ? 'bg-red-900/20 border-red-500' :
         'bg-[#1A1A1A] border-[#5D4037]'
       }`}>
-        <p className="text-[#A67C52] font-mono text-lg tracking-widest italic">
+        <p className="text-[#A67C52] font-mono text-2xl tracking-widest italic">
           &gt; {RIDDLES[currentRiddleIndex].riddle}
         </p>
       </div>

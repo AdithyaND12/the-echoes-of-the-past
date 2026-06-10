@@ -207,9 +207,9 @@ export default function PlayPage() {
                         <div className="flex items-center gap-5">
                           <div>
                             <div className="text-2xl font-black font-sans text-[#3E2723] italic tracking-tight">
-                              {activePuzzle.name}
+                              FRAGMENT {activePuzzle._id.split('_')[1]}
                             </div>
-                            <div className="text-xs font-mono text-[#5D4037] mt-2">
+                            <div className="text-xl font-mono text-[#5D4037] mt-2">
                               {activePuzzle.hint1}
                             </div>
                           </div>
@@ -218,12 +218,7 @@ export default function PlayPage() {
                         </div>
                       </div>
 
-                      {/* Audio Player */}
-                      {activePuzzle.audioUrl && (
-                        <div className="mb-8">
-                          <AudioPlayer src={activePuzzle.audioUrl} />
-                        </div>
-                      )}
+                      {/* Audio Player removed for Live Event Mode */}
 
                       {/* Core Interaction */}
                       <div className="space-y-12">
@@ -288,7 +283,7 @@ export default function PlayPage() {
                             {p.isSolved ? 'RECOVERED' : 'LOCKED'}
                           </div>
                           <div className="text-xl font-black text-[#3E2723] italic">
-                            {p.name}
+                            FRAGMENT {p._id.split('_')[1]}
                           </div>
                         </button>
                       ))}
