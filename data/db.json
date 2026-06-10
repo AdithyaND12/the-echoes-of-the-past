@@ -256,6 +256,20 @@
         "I",
         "E"
       ],
+      "isCompleted": true,
+      "endTime": "2026-06-10T04:31:13.862Z"
+    },
+    {
+      "name": "asd",
+      "teamId": "9vv2nxxs",
+      "startTime": "2026-06-10T04:40:01.992Z",
+      "solvedPuzzleIds": [
+        "puzzle_1"
+      ],
+      "attempts": 0,
+      "collectedLetters": [
+        "R"
+      ],
       "isCompleted": false
     }
   ]
